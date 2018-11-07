@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>testJsObject.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<script type="text/javascript" src="../common/js/jquery-3.3.1.js"></script>
+    
+	<style type="text/css">
+		.content .content-list.root{
+			width: 260px;
+			height: 260px;
+			text-align: center;
+		}
+		.see{
+			display: none;
+			width: 100%;
+			heiht:30px;
+		}
+		.bg{
+			width:100%;
+			height:100%;
+			position:absolute;
+			background:#D1D1D1;
+			left: 0px;
+			top: 0px;
+			opacity: 0.5;
+			display: none;
+		}
+		.popupBox{
+			position: absolute;
+			z-index: 99;
+			width:300px;
+			height:120px;
+			background: #fff;
+			border:10px solid #55352;
+			display: none;
+		}
+	</style>
+	<script type="text/javascript">
+		
+		/*!
+		 * ===============弹出层demo====================
+		 */
+		var popObj = {
+			//页面初始化时直接调用popObj.init()即可
+			init:function(){
+				this.bind();//放所有的事件
+				this.popup();//弹出层
+			},
+			bind:function(){
+				//移入查看，反之隐藏
+				$(".content-list").hover(function(){
+					$(this).find(".see").show();
+				},function(){
+					$(this).find(".see").hide();
+				});
+				//点击查看，显示bg背景和弹出层popupBox
+				$(".see").click(function(){
+					$(".bg,.popupBox").show();
+				});
+				$(".bg").click(function(){
+					$(".bg,.popupBox").hide();
+				});
+			},
+			popup:function(){
+				var box = $(".popupBox");
+				var clientWidth = document.body.clientWidth;
+				var clientHeight = document.body.clientHeight;
+				var _width = (clientWidth - box.width())/2;
+				var _height = (clientHeight - box.height())/2;
+				box.css({'left':_width,'top':_height});
+			}
+		}
+
+		$(function(){
+			//弹出层初始化
+			popObj.init();
+		});
+	</script>
+  </head>
+  
+  <body>
+  <div class="main">
+  	<div class="content">
+  		<div class="content-list root">
+  			<div>
+  				<span>I'm a content-list</span>
+  				<span class="see"><br><br>seeing....</span>
+  			</div>
+  		</div>
+  	
+  	</div>
+  	<div class="bg"></div>
+  	<div class="popupBox">
+  		<div>poping...</div>
+  	</div>
+  </div>
+    
+  </body>
+</html>

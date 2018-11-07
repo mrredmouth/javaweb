@@ -1,0 +1,85 @@
+asm-5.2.jar										struts2 required
+asm-commons-5.2.jar								struts2 required
+asm-tree-5.2.jar								struts2 required
+commons-fileupload-1.3.3.jar					struts2 required;IO依赖;
+commons-io-2.5.jar								struts2 required;IO依赖;FilenameUtils;
+commons-lang3-3.6.jar							struts2 required;StringUtils;
+freemarker-2.3.22.jar							struts2 required;
+jackson-annotations-2.9.0.jar					struts2 required;			
+jackson-core-2.9.5.jar							struts2 required;
+jackson-databind-2.9.5.jar						struts2 required;
+jackson-dataformat-xml-2.9.5.jar				struts2 required;
+jackson-module-jaxb-annotations-2.9.5.jar		struts2 required;
+javassist-3.20.0-GA.jar							struts2 required;
+ognl-3.1.15.jar									struts2 required;
+stax2-api-3.1.4.jar								struts2 required;
+struts2-config-browser-plugin-2.5.17.jar		struts2 required;
+struts2-convention-plugin-2.5.17.jar			struts2 required;
+struts2-core-2.5.17.jar							struts2 required;
+woodstox-core-5.0.3.jar							struts2 required;
+xmlpull-1.1.3.1.jar								struts2 required;
+xpp3_min-1.1.4c.jar								struts2 required;
+xstream-1.4.10.jar								struts2 required;
+struts2-spring-plugin-2.5.17.jar				struts2与spring整合依赖
+
+log4j-1.2-api-2.11.1.jar						log4j依赖
+log4j-api-2.10.0.jar							struts2 required;log4j依赖
+log4j-core-2.10.0.jar							struts2 required;log4j依赖
+
+ojdbc6.jar										oracle驱动包
+mysql-connector-java-8.0.12.jar					mysql驱动包
+commons-pool2-2.6.0.jar							连接池
+commons-dbcp2-2.5.0.jar							DBCP连接池
+druid-1.0.20.jar								Druid连接池
+
+commons-collections4-4.2.jar					CollectionUtils;
+commons-dbutils-1.7.jar							BeanMapHandler;
+
+dom4j-2.1.1.jar									xml解析依赖
+poi-3.17.jar									excel解析依赖
+poi-ooxml-3.17.jar								excel解析依赖
+poi-ooxml-schemas-3.17.jar						excel解析依赖
+
+jsp-api.jar										jsp JSTL/EL语言依赖
+el-api.jar										jsp JSTL/EL语言依赖
+jstl-impl.jar									jsp JSTL/EL语言依赖
+taglibs-standard-impl-1.2.5.jar					jsp JSTL/EL语言依赖
+taglibs-standard-spec-1.2.5.jar					jsp JSTL/EL语言依赖
+servlet-api.jar									servlet依赖包
+
+lombok.jar										GetterSstter插件
+
+commons-logging-1.1.3.jar						spring 日志依赖包
+aspectjrt.jar									spring AOP依赖
+aspectjtools.jar								spring AOP依赖
+aspectjweaver.jar								spring AOP依赖
+org.aspectj.matcher.jar							spring AOP依赖
+
+spring-aop-5.0.8.RELEASE.jar					spring required
+spring-aspects-5.0.8.RELEASE.jar				spring required
+spring-beans-5.0.8.RELEASE.jar					spring required
+spring-context-5.0.8.RELEASE.jar				spring required
+spring-context-indexer-5.0.8.RELEASE.jar		spring required
+spring-context-support-5.0.8.RELEASE.jar		spring required
+spring-core-5.0.8.RELEASE.jar					spring required
+spring-expression-5.0.8.RELEASE.jar				spring required
+spring-tx-5.0.8.RELEASE.jar						spring事务
+spring-web-5.0.8.RELEASE.jar					spring web项目
+spring-webmvc-5.0.8.RELEASE.jar					spring web项目
+spring-jdbc-5.0.8.RELEASE.jar					连接数据库
+spring-orm-5.0.8.RELEASE.jar					连接数据库;与hibernate整合
+xbean.jar										spring IOC依赖
+
+struts2-spring-plugin-2.5.17.jar				spring与struts2整合依赖
+
+mybatis-3.4.6.jar								mybatis依赖
+
+
+
+
+
+
+
+
+
+

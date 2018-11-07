@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<!-- head包含5种元素：
+		title：网页标题
+		meta：页面元数据
+		link：链接外部css资源
+		script：包含js脚本
+		style：定义内部css样式 -->
+  <head>
+    <title>html5.html</title>
+	<!--meta定义页面元信息，属性主要有三个：
+		http-equiv:指定元信息名称，可帮助浏览器正确处理网页内容
+		name:元信息名称
+		content：元信息的值 -->
+    <!-- content-type：描述文档类型和字符编码 -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!-- keywords：关键词不超过5个，用于搜索网站 -->
+    <meta name="keywords" content="html5,java开发,前端开发">
+    <!-- description：对网页的描述，一般不超过100个字 -->
+    <meta name="description" content="this is my page">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <!-- <script type="text/javascript"></script> -->
+
+  </head>
+  
+  <body>
+    <h3>1、块级标签</h3>
+ 	<h5>浏览器会在前后折行,常用的有：p,h1,..h6,div,ul等。</h5>
+	<h4>有序列表：</h4>
+	<ol>
+		<li>列表1</li>
+		<li>列表2</li>
+		<li>列表3</li>
+	</ol>
+	<h4>无序列表：</h4>
+ 	<ul>
+		<li>列表1</li>
+		<li>列表2</li>
+		<li>列表3</li>
+ 	</ul>
+	<h4>定义描述标签：</h4>
+    <dl>
+    	<dt>标题</dt>
+    	<dd>描述1</dd>
+    	<dd>描述2</dd>
+    	<dd>描述3</dd>
+    </dl>
+	<h4>分区标签：</h4>
+    <div>头模块</div>
+    <div>内容模块</div>
+    <div>底部模块</div>
+    
+	<br><hr/>
+    <h3>2、行级标签</h3>
+   	 按行逐一显示，前后不会自动换行。<br>
+   	 <h4>文本格式化标签</h4>
+    <b>粗体</b>
+    <strong>粗体，基本同b</strong>
+    <i>斜体</i>
+    <em>强调文本</em>
+    <small>小号文本</small>
+    <sub>下标文本</sub>
+    <sup>上标文本</sup>
+    <bdo dir="rtl">定义文本显示方向</bdo>
+   	<h4>超链接标签</h4>
+   	<!-- target属性有四个：
+   			_self:自身；_blank:新窗口；_top:顶层框架；_parent：父层框架 -->
+   	<a href="" src="图片地址" alt="提示文字" target="_self"></a>
+   	<h4>span标签</h4>
+   	<span>文本等行级内容</span>
+   	<h4>特殊符号</h4>
+   	空格：&nbsp;
+   	大于：&gt;
+   	小于：&lt;
+   	引号：&quot;
+   	版权号：&copy;
+   	
+  </body>
+</html>

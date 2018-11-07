@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>testVue.html</title>
+	
+    <meta charset="UTF-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="testVue.css">
+	<!-- <script type="text/javascript" src="https://unpkg.com/vue"></script> -->
+	<script type="text/javascript" src="vue.js"></script>
+	
+  </head>
+  <body>
+  	<div id="vue-app-one">
+  	<h1>1、new Vue：</h1>
+  		<b>el,data,methods,data-binding...</b>
+  		<p><strong>message: </strong>{{ message }}</p>
+  		<p><strong>agreet(args): </strong>{{ agreet('afternoon') }}</p>
+  		<!-- v-bind属性绑定，放在属性前面，则里面直接根vue数据里面的key -->
+  		<a v-bind:href="website" v-bind:alt="website">website</a>
+  		<input type="text" v-bind:value="name">
+  		<p v-html="websiteTag"></p>
+  	<h1>2、Events</h1>
+	<b>单击事件：</b>
+  		<button v-on:click.once="add">增一岁</button><!-- v-on:与@用法相同 -->
+  		<button @click.once="substract(2)">减2岁</button><br>
+	<b>双击事件：</b>
+  		<button v-on:dblclick="add">增一岁</button>
+  		<button v-on:dblclick="substract(10)">减十岁</button>
+  		<p>my age is {{ age }}</p>
+  		
+	<p>鼠标事件：在这个容器里面，鼠标移动时可以获取x,y轴坐标值</p>
+  		<div id="canvas" v-on:mousemove="updateXY">
+  			x:{{x}},y:{{y}}---<!-- <span v-on:mousemove.stop>STOP MOVING!!!</span> -->
+  		</div>
+	<b>事件修饰符：</b>
+  		v-on:mousemove.stop<br>  	
+  		v-on:click.once<br>
+	<b>键盘事件：</b>
+  		<label>姓名</label>
+  		<!-- v-on:keyup				键盘输入任何字符的时候，就触发logName方法。
+  			 v-on:keyup.enter		键盘输入enter建的时候，才触发。
+  			 v-on:keyup.alt.enter	键盘同时按alt+enter时才触发。 -->
+  		<input type="text" name="name" v-on:keyup="logName"><span>{{name}}</span>
+  		<label>年龄</label>
+  		<input type="text" name="age" v-on:keyup.enter="logAge">
+  	<h1>3、双向数据绑定</h1>
+  		<p>对于三个标签：input，select，textarea</p>
+  		<p>输入框输入什么，后面显示什么</p>
+  		<input ref="refName" type="text" name="name" v-on:keyup="logName"><span>{{name}}</span>
+  		<!-- v-model="name",也可以实现双向绑定，当前input的值绑定到vue的属性name上 -->
+  		<input ref="refName2" type="text" name="name2" v-model="name"><span>{{name}}</span>
+  	<h1>4、计算属性</h1>
+  		<p>Computer 计算属性</p>
+  		<button v-on:click="a++">Add to A</button>
+  		<button v-on:click="b++">Add to B</button>
+  		<!-- {{addToA}}里面跟的是属性，不是方法addToA()，vue会自动去computer里面找有没有addToA这个属性，把方法当成属性用，
+  			而且计算属性比方法有优化，当计算量比较大，或者搜索量很大的时候，用计算属性，减少项目压力 -->
+  		<p>A+age: {{addToA}}</p>
+  		<p>B+age: {{addToB}}</p>
+  	<h1>5、动态绑定css样式</h1>
+  	<h4>示例1</h4>
+  		<!-- 点击事件：点击时将vue属性里的changeColor值ture/false取反 。
+  			绑定样式：v-bind:class="{changeColor:changeColor},前面的changeColor是样式的名称，后面的changeColor是vue属性值true/false -->
+  		<div v-on:click="changeColor=!changeColor" v-bind:class="{changeColor:changeColor,bindDiv:true}">
+  			<span>Herry</span>
+  		</div>
+  	<h4>示例2</h4>
+  		<button v-on:click="changeColor=!changeColor">Change Color</button>
+  		<button v-on:click="changeLength=!changeLength">Change Length</button>
+  		<div v-bind:class="comClasses">
+  			<span>Herry</span>
+  		</div>
+  	<h1>6、指令：v-if，v-else-if条件</h1>
+  		<button v-on:click="error=!error">Toggle Error</button>
+  		<button v-on:click="success=!success">Toggle Success</button>
+  		<p v-if="error">网络连接错误404</p><!-- error属性值为false，则此p标签不会显示 -->
+  		<p v-else-if="success">网络连接成功200</p>
+  		<h4>与v-show的区别</h4>
+  		v-if在Dom结构里面没有这个元素；<br>
+  		v-show在Dom里有，只是改了display:none;<br>
+  		<button v-on:click="success=!success">Toggle Success v-show</button>
+  		<p v-show="success">网络连接成功200</p>
+  	<h1>7、指令：v-for循环</h1>
+  		<ul>
+  			<li v-for="hobby in hobbies">{{hobby}}</li>
+  		</ul>
+  		<!-- 遍历对象 -->
+  		<ul>
+  			<li v-for="user in users">{{user.name}},{{user.age}}</li>
+  		</ul>
+  		<!-- 可以拿到遍历的下标 -->
+  		<ul>
+  			<li v-for="(user,index) in users">{{index}}、{{user.name}},{{user.age}}</li>
+  		</ul>
+  		<p>v-for放在哪个标签里面，就循环哪个标签，生成对应的Dom。</p>
+  		<p>如果不想显示这个标签，只循环里面的内容，用template标签，这个标签不会生成Dom。</p>
+  		<template v-for="(user,index) in users">{{index}}、{{user.name}},{{user.age}}</template>
+  		<template v-for="(user,index) in users">
+			<template v-for="(val,key) in user"><!-- 可以拿到对象的K、v -->
+				<p>{{key}}:{{val}}</p>
+			</template>
+		</template>
+  		
+  	</div>
+  	<div id="vue-app-two">
+  	<h1>9、创建多个实例化对象</h1>
+  		<button v-on:click="changeTitle">changeTitle of vueOne</button>
+  	</div>
+  	<h1>10、vue组件</h1>
+  	<div id="vue-app-three">
+  		<!-- 直接使用组件的模板greeting，里面的内容照搬过来，生成Dom。
+  			在两个对象中都使用模板，data数据放在里面return，则不会都共用。两个div不影响，各自改各自的。
+  			如果data数据放在外面，使用一个对象，在点击button时，两个div都会影响。 -->
+  		<greeting></greeting>
+  	</div>
+  	<div id="vue-app-four">
+  		<greeting></greeting>
+  	</div>
+  	
+  	<h1>11、vue CLI 脚手架</h1>
+  	<span>
+	  	脚手架是通过webpack搭建的开发环境；<br>
+	  	使用ES6语法；<br>
+	  	打包和压缩JS为一个文件；<br>
+	  	项目文件在环境中编译，而不是在浏览器中；<br>
+	  	实现页面自动刷新；<br>
+  	</span>  	
+  	依赖与node.js,必须在系统中安装。
+  	通过npm安装的vue项目：F:\projects\vue-playlist
+  	
+	<script type="text/javascript" src="testVue.js"></script>
+  </body>
+</html>

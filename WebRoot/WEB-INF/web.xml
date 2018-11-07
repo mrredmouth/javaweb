@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" id="WebApp_9" version="2.4">
+  <display-name>javaweb</display-name>
+  
+  <!-- 定义全局参数，tomcat容器会封装到config属性中 -->
+  <context-param>
+    <description>全局参数，供ServletContext调用，监听器使用</description>
+    <param-name>contextName</param-name>
+    <param-value>willCon</param-value>
+  </context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring/applicationContext*.xml</param-value>
+  </context-param>
+  
+  <!-- 创建监听器方式：1)xml配置方式;2)注解方式@WebListener。
+  		监听器用于监听三大作用域：1）监听对象的改变；2）监听对象属性和方法的改变 -->
+  <listener>
+    <listener-class>com.ccg.listener.MyServletContextListener</listener-class>
+  </listener>
+  
+  <!-- 创建过滤器采用xml配置方式，不使用@Filter注解方式，因为要根据filter-mapping顺序设置过滤顺序 -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>com.ccg.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <description>req请求设置编码</description>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <description>是否强制使用编码</description>
+      <param-name>encodingForce</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+<!--   多个过滤器，按照filter-mapping顺序执行过滤器：
+	 		放行之前的执行顺序：1，3，2
+	 		放行之后的执行顺序：2，3，1 -->
+  <filter>
+    <filter-name>LoginFilter3</filter-name>
+    <filter-class>com.ccg.filter.LoginFilter3</filter-class>
+  </filter>
+  <filter>
+    <filter-name>LoginFilter1</filter-name>
+    <filter-class>com.ccg.filter.LoginFilter1</filter-class>
+  </filter>
+  <filter>
+    <filter-name>LoginFilter2</filter-name>
+    <filter-class>com.ccg.filter.LoginFilter2</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter1</filter-name>
+    <url-pattern>/login</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter3</filter-name>
+    <url-pattern>/login</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter2</filter-name>
+    <url-pattern>/login</url-pattern>
+  </filter-mapping>
+  
+<!--   创建servlet方式：1）xml配置方式；
+  					2）注解方式   @WebServlet("/upload")，或者带参数：
+  								@WebServlet(value="/servlet/hello2",
+									initParams = {
+										@WebInitParam(name="encoding",value="UTF-8"),
+										@WebInitParam(name="name",value="will")
+									}
+								) -->
+  <servlet>
+    <servlet-name>HelloServlet</servlet-name>
+    <servlet-class>com.ccg.servlet.HelloServlet</servlet-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloServlet</servlet-name>
+    <url-pattern>/servlet/hello1</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>/pages/login/login.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/404.jsp</location>
+  </error-page>
+</web-app>

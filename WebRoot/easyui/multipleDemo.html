@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>利用EasyUI实现多选下拉框</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	
+    <link rel="stylesheet" type="text/css" href="/easyui/multipleDemo.css" />
+    <script type="text/javascript" src="../common/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../common/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+		function selectMultiple(id,dataList){
+			var idSelector = $("#" + id);
+			idSelector.combotree({
+				valueField: "id", //Value字段
+				textField: "text", //Text字段
+				multiple: true,
+				data: [{ "id": "ALL", 
+					"text": "全选", 
+					"children": dataList
+					}],
+				//  url: "tree_data2.json", //数据源
+				onCheck: function (node, checked) {
+					//让全选不显示
+					idSelector.combotree("setText", idSelector.combobox("getText").toString().replace("全选,", ""));
+				},
+				onClick: function (node, checked) {
+					//让全选不显示
+					idSelector.combotree("setText", idSelector.combobox("getText").toString().replace("全选,", ""));
+				}
+			});
+		}
+        $(function () {
+        	//json类型的数组
+			var usageData = [{ "id": 1, "text": "营业" },{ "id": 2, "text": "办公" },{ "id": 3, "text": "机房" },
+			{ "id": 4, "text": "仓储" },{ "id": 5, "text": "空置/闲置" },{ "id": 6, "text": "公用设施" },
+			{ "id": 10, "text": "租出" },{ "id": 11, "text": "食堂" },{ "id": 12, "text": "车房" },
+			{ "id": 13, "text": "员工活动室" },{ "id": 14, "text": "宿舍" },{ "id": 18, "text": "其他" }];
+        	selectMultiple("ddlLine",usageData);
+        })
+    </script>
+  </head>
+<body>
+    多选下拉框：<select id="ddlLine" class="easyui-combotree" style="width: 200px; height: 24px;"></select>
+</body>
+</html>
+	
