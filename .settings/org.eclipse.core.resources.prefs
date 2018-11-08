@@ -3,5 +3,6 @@ encoding//WebRoot/index.jsp=UTF-8
 encoding//WebRoot/pages/login/foot.jsp=UTF-8
 encoding//WebRoot/pages/login/login.jsp=UTF-8
 encoding//properties/jdbc.properties=UTF-8
+encoding//properties/sso.properties=UTF-8
 encoding//src/com/ccg/servlet/HelloServlet.java=UTF-8
 encoding//src/com/ccg/servlet/LoginServlet.java=UTF-8

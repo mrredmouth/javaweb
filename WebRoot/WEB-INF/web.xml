@@ -67,6 +67,16 @@
     <url-pattern>/login</url-pattern>
   </filter-mapping>
   
+<!-- sso单点登录 -->
+  <filter>
+    <filter-name>SSOClientFilter</filter-name>
+    <filter-class>com.ccg.sso.filter.SSOClintFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SSOClientFilter</filter-name>
+    <url-pattern>/main</url-pattern>
+  </filter-mapping>
+  
 <!--   创建servlet方式：1）xml配置方式；
   					2）注解方式   @WebServlet("/upload")，或者带参数：
   								@WebServlet(value="/servlet/hello2",

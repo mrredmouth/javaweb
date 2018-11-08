@@ -1,9 +1,18 @@
 package com.ccg.common;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import org.dom4j.DocumentException;
 import org.junit.Test;
 
 public class TestCommonUtils {
+	
+	@Test
+	public void testProp() throws DocumentException, IOException{
+		Properties properties = CommonUtils.getProperties("sso.properties");
+		System.out.println(properties);
+	}
 	
 	@Test
 	public void testEvalJsStr() throws DocumentException{
