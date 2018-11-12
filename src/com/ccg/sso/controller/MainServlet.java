@@ -10,6 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ccg.common.CommonUtils;
 
+/**
+ * 模拟客户端： http://www.crm.com:8088/crm/main
+ * 			   http://www.wms.com:8088/wms/main
+ * 对应服务端(统一认证中心),模拟在springmvc项目中：
+ * 			   http://www.sso.com:8088/sso/checkLogin
+ * @author Administrator
+ *
+ */
 @WebServlet(name="mainServlet",urlPatterns="/main")
 public class MainServlet extends HttpServlet{
 
