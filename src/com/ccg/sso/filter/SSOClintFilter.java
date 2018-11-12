@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ccg.common.CommonUtils;
+import com.ccg.common.HttpUtils;
 
 public class SSOClintFilter implements Filter{
 	
@@ -54,10 +55,18 @@ public class SSOClintFilter implements Filter{
 		String token = req.getParameter("token");
 		if(StringUtils.isNotBlank(token)){
 			//不为空，判断令牌是否是统一认证中心发过来的
-			String httpUrl = (String) props.get("server-url-prefix") + "/verify";
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("token", token);
-			String isVerify = CommonUtils.sendHttpRequest(httpUrl, params);
+			//其他系统使用统一认证中心已有的token时，需要将登出url和jsessionid带过去，便于销毁session
+			int number = req.getRequestURL().toString().indexOf(req.getContextPath(),0);
+			//获取到上下文路径的地址 http://www.crm.com:8088/crm
+			String clientHostUri =  req.getRequestURL().toString().substring(0,number) + req.getContextPath();
+			params.put("clientLogOutUrl", clientHostUri+"/logOut"); //http://www.crm.com:8088/crm/logOut
+			params.put("jsessionId", req.getSession().getId());
+			
+
+			String httpUrl = (String) props.get("server-url-prefix") + "/verify";
+			String isVerify = HttpUtils.sendHttpRequest(httpUrl, params);
 			if("true".equals(isVerify)){
 				//统一认证中心验证通过，则创建局部会话
 				session.setAttribute("isLogin", true);
@@ -68,10 +77,7 @@ public class SSOClintFilter implements Filter{
 		}
 		
 		//没有局部会话，且没有令牌token，则重定向到统一认证中心，检查是否有其他系统登录过
-		int number = req.getRequestURL().toString().indexOf(req.getRequestURI(),0);
-		@SuppressWarnings("unused")
-		String clientHostUrl1 =  req.getRequestURL().toString().substring(0,number) + req.getRequestURI();
-		String clientHostUrl = req.getRequestURL().toString();
+		String clientHostUrl = req.getRequestURL().toString();  //http://www.crm.com:8088/crm/main
 		String serverUrlPrefix = (String) props.get("server-url-prefix");
 		StringBuilder url = new StringBuilder(50)
 				.append(serverUrlPrefix)
