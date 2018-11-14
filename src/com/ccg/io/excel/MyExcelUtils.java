@@ -370,6 +370,44 @@ public class MyExcelUtils {
         br.close();
         out.close();
     }
-
-    
+    /**
+     * excel 列字符 得到 列索引
+     * 	AA column index of 27 ;
+     *  Z column index of 26 ;
+     * @param colStr
+     * @return
+     */
+    public static int getColumnIndexFromStr(String colStr) { 
+    	int num = 0; 
+    	int result = 0; 
+    	int length = colStr.length();
+    	for(int i = 0; i < length; i++) { 
+    		char ch = colStr.charAt(length - i - 1); 
+    		num = (int)(ch - 'A' + 1) ; 
+    		num *= Math.pow(26, i); 
+    		result += num; 
+    	} 
+    	return result; 
+    }
+    /**
+     * excel 列索引 得到 列字符
+     * 26 column in excel of Z 
+     * @param columnIndex
+     * @return
+     */
+    public static String getColumnStrFromIndex(int columnIndex) { 
+    	if (columnIndex <= 0) { 
+    		return null; 
+    	} 
+    	String columnStr = ""; 
+    	columnIndex--; 
+    	do { 
+    		if (columnStr.length() > 0) { 
+    			columnIndex--; 
+    		} 
+    		columnStr = ((char) (columnIndex % 26 + (int) 'A')) + columnStr; 
+    		columnIndex = (int) ((columnIndex - columnIndex % 26) / 26); 
+    	} while (columnIndex > 0); 
+    	return columnStr; 
+    }
 }
