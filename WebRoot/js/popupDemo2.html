@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>testJsObject.html</title>
+	
+    <meta charset="UTF-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">	
+    
+	<link type="text/css" rel="stylesheet" href="../common/css/layer-animate.css">
+    <script type="text/javascript" src="../common/js/method.js"></script>
+	<script type="text/javascript" src="../common/js/jquery-3.3.1.js"></script>
+    
+	<style type="text/css">
+		*{ 
+			margin:0; 
+			padding: 0; 
+			font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif; 
+		} 
+		.btn{ 
+			float:left; 
+			font-size: 18px; 
+			margin:10px; 
+			padding: 8px 12px; 
+			cursor: pointer; 
+			border: 1px solid #ddd; 
+			border-radius: 3px; 
+		} 
+		.layerContentDiv{
+			display:none;
+		}
+	</style>
+  </head>
+  
+  <body>
+  <div class="main">
+  	<div class="content">
+  		<div class="btn btn1">从上滑落</div> 
+		<div class="btn btn2">从下划入</div> 
+		<div class="btn btn3">中间扩散</div> 
+		<div class="btn btn4">中间扩散渐入</div> 
+		<div class="btn btn5">从下方平滑进入</div> 
+		<div class="btn btn6">翻转</div> 
+		<div class="btn btn7">晃动</div> 
+		<div class="btn btn8">左右伸缩</div> 
+		<div class="btn btn9">透明度渐入</div> 
+		<div class="btn btn10">无动效弹框</div>
+  	</div>
+  </div>
+  <div class="layerContentDiv">
+  	<form action="">
+  		<table>
+  			<tr>
+  				<td>反馈意见类型：</td>
+  				<td><input type="text" name="FEEDBACK_TYPE" id="FEEDBACK_TYPE" value=""></td>
+  			</tr>
+  			<tr>
+  				<td>整改方案：</td>
+  				<td><input type="text" name="FEEDBACK_WAY" id="FEEDBACK_WAY" value=""></td>
+  			</tr>
+  			<tr>
+  				<td>反馈说明：</td>
+  				<td><input type="text" name="FEEDBACK_DES" id="FEEDBACK_DES" value=""></td>
+  			</tr>
+  			<tr>
+  				<td>附件上传：</td>
+  				<td><input type="text" name="FEEDBACK_FILES" id="FEEDBACK_FILES" value=""></td>
+  			</tr>
+  		</table>
+  	</form>
+	大多数的时候，假如我们要求的事物没有出现在生活中，我们会感到沮丧和失望，我们甚至会开始怀疑，这种怀疑会让人感到心灰意冷。接受这个感觉，然后用坚定的信念代替它：“我知道……我知道……我知道……，它就要实现了。”
+  </div>
+  </body>
+  
+<script type="text/javascript">
+	/*  type属性：值用来切换显示效果slideFromTop、slideFromBottom、showSweetAlert、none、layerFadeIn、layer-fadeInUpBig、layer-rollIn、layer-shake、layer-spread、layer-fadeIn 
+     	close属性：为false为没有关闭按钮，close属性为true或无close属性则有关闭按钮  
+    	btn属性：值为0的时候，则表示不显示该按钮。否则显示该按钮
+    	title属性：有title属性的话，则有标题，标题内容为title值，无title属性则无标题 
+    */
+	$(".btn1").on("click",function(){ 
+	    var obj={ 
+	        type:"slideFromTop", 
+	        close:"false", 
+	        content:$('.layerContentDiv').html(),
+	        btn:["取消","保存"] 
+	    }; 
+	    method.msg_layer(obj); 
+	}); 
+	$(".btn2").on("click",function(){ 
+	   var obj={ 
+	       type:"slideFromBottom", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["500px","200px"], 
+	       btn:[0,"保存"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn3").on("click",function(){ 
+	   var obj={ 
+	       type:"showSweetAlert", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["500px","auto"], 
+	       btn:["取消","提交"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn4").on("click",function(){ 
+	   var obj={ 
+	       type:"layerFadeIn", 
+	       title:"弹框标题", 
+	       close:"true", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["auto","200px"], 
+	        btn:["取消",0] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn5").on("click",function(){ 
+	   var obj={ 
+	       type:"layer-fadeInUpBig", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["500px","200px"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn6").on("click",function(){ 
+	   var obj={ 
+	       type:"layer-rollIn", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["500px","200px"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn7").on("click",function(){ 
+	   var obj={ 
+	       type:"layer-shake", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["500px","200px"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn8").on("click",function(){ 
+	   var obj={ 
+	       type:"layer-spread", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	       area:["300px","200px"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn9").on("click",function(){ 
+	   var obj={ 
+	       type:"layer-fadeIn", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(),  
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	$(".btn10").on("click",function(){ 
+	   var obj={ 
+	       type:"none", 
+	       title:"弹框标题", 
+	       content:$('.layerContentDiv').html(), 
+	       area:["500px","200px"] 
+	   }; 
+	   method.msg_layer(obj); 
+	}); 
+	
+	$("body").delegate(".msg-layer-bg","click",function(){ 
+	    method.msg_close();
+	}); 
+	
+	/*倒计时，多少秒之后*/
+    function countDown(seconds){ 
+		if(seconds-->0){ 
+			setTimeout("countDown("+seconds+")",1000); 
+		}else{
+			method.msg_close();
+			$(".layerContentDiv").hide();
+			window.location.reload(); 
+		} 
+	}
+	
+	$(function(){
+		
+	});
+</script>
+</html>

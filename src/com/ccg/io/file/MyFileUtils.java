@@ -1,10 +1,17 @@
 package com.ccg.io.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -201,5 +208,50 @@ public class MyFileUtils {
 	        }
     	}
     }
-    
+    /**
+     * 将数据库数据ResultSet写到文件.Txt里
+     */
+
+	public static void writeResultSetToTxt(String[] args) throws Exception {
+        Connection conn = null;
+        //测试库
+        String url="jdbc:oracle:thin:@134.96.188.186:1521:HZCW";
+        String username="zjcw";  
+        String password="qwer1234";
+  
+        try {
+			
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            
+            //连接测试环境
+            conn = DriverManager.getConnection(url,username,password);
+            
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from daily_debt_total");// executeUpdate语句会返回一个受影响的行数，如果返回-1就没有成功
+             
+            FileOutputStream fos = new FileOutputStream("E:\\all_tables.dat",true);
+            //fos.write(rs.getInt(1));
+            PrintStream ps = new PrintStream(fos);
+            while (rs.next()) {
+                System.out.println(rs.getString(1) +","+rs.getString(2) +"," +rs.getString(3) +","+rs.getString(4) + "," + rs.getString(5)+ "," + rs.getString(6));// 入如果返回的是int类型可以用getInt()
+             
+                String stringDes = rs.getString(1) +","+rs.getString(2) +"," +rs.getString(3) +","+rs.getString(4) + "," + rs.getString(5) + "," + rs.getString(6);
+                //FileOutputStream fos = new FileOutputStream("E:\\ok.txt",true);
+                //fos.write(rs.getInt(1));
+                //PrintStream p = new PrintStream(fos);
+                ps.println(stringDes);
+            }
+          
+            ps.close();
+            fos.flush();
+             
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.close();
+        }
+  
+    }
 }

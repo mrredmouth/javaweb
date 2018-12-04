@@ -1,4 +1,4 @@
-package com.ccg.common;
+package com.ccg.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

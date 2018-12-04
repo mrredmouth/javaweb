@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ccg.common.CommonUtils;
-import com.ccg.common.HttpUtils;
+import com.ccg.http.HttpUtils;
 
 public class SSOClintFilter implements Filter{
 	
