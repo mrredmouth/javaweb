@@ -1,7 +1,7 @@
-package com.ccg.webservice.czservice.invoke;
+package com.ccg.webservice.czservice.consumer.invoke;
 
-import com.ccg.webservice.czservice.wsdl.SendService;
-import com.ccg.webservice.czservice.wsdl.SendServiceService;
+import com.ccg.webservice.czservice.consumer.wsdl.SendService;
+import com.ccg.webservice.czservice.consumer.wsdl.SendServiceService;
 
 /**
  * 测试从czxt中得到的接口：http://localhost:8080/czxt/webservice/sendServie?wsdl

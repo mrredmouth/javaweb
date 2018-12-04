@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.czservice.wsdl;
+package com.ccg.webservice.czservice.consumer.wsdl;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -23,8 +23,8 @@ public interface SendService {
 	 */
 	@WebMethod
 	@WebResult(targetNamespace = "")
-	@RequestWrapper(localName = "sendOrg", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.wsdl.SendOrg")
-	@ResponseWrapper(localName = "sendOrgResponse", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.wsdl.SendOrgResponse")
+	@RequestWrapper(localName = "sendOrg", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.consumer.wsdl.SendOrg")
+	@ResponseWrapper(localName = "sendOrgResponse", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.consumer.wsdl.SendOrgResponse")
 	public boolean sendOrg(@WebParam(name = "arg0", targetNamespace = "") OaProject arg0);
 
 	/**
@@ -34,8 +34,8 @@ public interface SendService {
 	 */
 	@WebMethod
 	@WebResult(targetNamespace = "")
-	@RequestWrapper(localName = "sendOA", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.wsdl.SendOA")
-	@ResponseWrapper(localName = "sendOAResponse", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.wsdl.SendOAResponse")
+	@RequestWrapper(localName = "sendOA", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.consumer.wsdl.SendOA")
+	@ResponseWrapper(localName = "sendOAResponse", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", className = "com.ccg.webservice.czservice.consumer.wsdl.SendOAResponse")
 	public boolean sendOA(@WebParam(name = "param", targetNamespace = "") String param);
 
 }

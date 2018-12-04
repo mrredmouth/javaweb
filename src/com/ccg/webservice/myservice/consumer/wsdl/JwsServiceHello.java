@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.consumer;
+package com.ccg.webservice.myservice.consumer.wsdl;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -13,7 +13,7 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.0
  * 
  */
-@WebService(name = "JwsServiceHello", targetNamespace = "http://provider.webservice.ccg.com/")
+@WebService(name = "JwsServiceHello", targetNamespace = "http://privoder.myservice.webservice.ccg.com/")
 public interface JwsServiceHello {
 
 	/**
@@ -23,8 +23,8 @@ public interface JwsServiceHello {
 	 */
 	@WebMethod
 	@WebResult(targetNamespace = "")
-	@RequestWrapper(localName = "getValue", targetNamespace = "http://provider.webservice.ccg.com/", className = "com.ccg.webservice.consumer.GetValue")
-	@ResponseWrapper(localName = "getValueResponse", targetNamespace = "http://provider.webservice.ccg.com/", className = "com.ccg.webservice.consumer.GetValueResponse")
+	@RequestWrapper(localName = "getValue", targetNamespace = "http://privoder.myservice.webservice.ccg.com/", className = "com.ccg.webservice.myservice.consumer.wsdl.GetValue")
+	@ResponseWrapper(localName = "getValueResponse", targetNamespace = "http://privoder.myservice.webservice.ccg.com/", className = "com.ccg.webservice.myservice.consumer.wsdl.GetValueResponse")
 	public String getValue(@WebParam(name = "arg0", targetNamespace = "") String arg0);
 
 }

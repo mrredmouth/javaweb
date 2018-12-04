@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.consumer;
+package com.ccg.webservice.myservice.consumer.wsdl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,18 +23,18 @@ import javax.xml.ws.WebServiceClient;
  * </p>
  * 
  */
-@WebServiceClient(name = "JwsServiceHelloService", targetNamespace = "http://provider.webservice.ccg.com/", wsdlLocation = "http://134.98.100.70:8080/Service/ServiceHello?wsdl")
+@WebServiceClient(name = "JwsServiceHelloService", targetNamespace = "http://privoder.myservice.webservice.ccg.com/", wsdlLocation = "http://134.98.100.70:8080/Service/ServiceHello?wsdl")
 public class JwsServiceHelloService extends Service {
 
 	private final static URL JWSSERVICEHELLOSERVICE_WSDL_LOCATION;
 	private final static Logger logger = Logger
-			.getLogger(com.ccg.webservice.consumer.JwsServiceHelloService.class.getName());
+			.getLogger(com.ccg.webservice.myservice.consumer.wsdl.JwsServiceHelloService.class.getName());
 
 	static {
 		URL url = null;
 		try {
 			URL baseUrl;
-			baseUrl = com.ccg.webservice.consumer.JwsServiceHelloService.class.getResource(".");
+			baseUrl = com.ccg.webservice.myservice.consumer.wsdl.JwsServiceHelloService.class.getResource(".");
 			url = new URL(baseUrl, "http://134.98.100.70:8080/Service/ServiceHello?wsdl");
 		} catch (MalformedURLException e) {
 			logger.warning(
@@ -50,7 +50,7 @@ public class JwsServiceHelloService extends Service {
 
 	public JwsServiceHelloService() {
 		super(JWSSERVICEHELLOSERVICE_WSDL_LOCATION,
-				new QName("http://provider.webservice.ccg.com/", "JwsServiceHelloService"));
+				new QName("http://privoder.myservice.webservice.ccg.com/", "JwsServiceHelloService"));
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class JwsServiceHelloService extends Service {
 	 */
 	@WebEndpoint(name = "JwsServiceHelloPort")
 	public JwsServiceHello getJwsServiceHelloPort() {
-		return super.getPort(new QName("http://provider.webservice.ccg.com/", "JwsServiceHelloPort"),
+		return super.getPort(new QName("http://privoder.myservice.webservice.ccg.com/", "JwsServiceHelloPort"),
 				JwsServiceHello.class);
 	}
 

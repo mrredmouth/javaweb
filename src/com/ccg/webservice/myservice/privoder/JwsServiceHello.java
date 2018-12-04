@@ -1,4 +1,4 @@
-package com.ccg.webservice.provider;
+package com.ccg.webservice.myservice.privoder;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

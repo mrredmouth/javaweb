@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.czservice.wsdl;
+package com.ccg.webservice.czservice.consumer.wsdl;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

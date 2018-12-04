@@ -1,11 +1,12 @@
-package com.ccg.webservice.consumer.invoke;
+package com.ccg.webservice.myservice.consumer.invoke;
 
-import com.ccg.webservice.consumer.JwsServiceHello;
-import com.ccg.webservice.consumer.JwsServiceHelloService;
+import com.ccg.webservice.myservice.consumer.wsdl.JwsServiceHello;
+import com.ccg.webservice.myservice.consumer.wsdl.JwsServiceHelloService;
 
 /**
  * 客户端调用服务端的接口
  * 测试本项目中的提供服务者：/javaweb/src/com/ccg/webservice/provider/JwsServiceHello.java
+ * run一下提供者的main方法，发布服务成功后
  * 接口地址：http://134.98.100.70:8080/Service/ServiceHello?wsdl
  * @author Administrator
  *

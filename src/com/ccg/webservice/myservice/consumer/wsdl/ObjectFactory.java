@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.consumer;
+package com.ccg.webservice.myservice.consumer.wsdl;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -8,7 +8,8 @@ import javax.xml.namespace.QName;
 
 /**
  * This object contains factory methods for each Java content interface and Java
- * element interface generated in the com.ccg.webservice.consumer package.
+ * element interface generated in the com.ccg.webservice.myservice.consumer.wsdl
+ * package.
  * <p>
  * An ObjectFactory allows you to programatically construct new instances of the
  * Java representation for XML content. The Java representation of XML content
@@ -20,24 +21,17 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-	private final static QName _GetValue_QNAME = new QName("http://provider.webservice.ccg.com/", "getValue");
-	private final static QName _GetValueResponse_QNAME = new QName("http://provider.webservice.ccg.com/",
+	private final static QName _GetValue_QNAME = new QName("http://privoder.myservice.webservice.ccg.com/", "getValue");
+	private final static QName _GetValueResponse_QNAME = new QName("http://privoder.myservice.webservice.ccg.com/",
 			"getValueResponse");
 
 	/**
 	 * Create a new ObjectFactory that can be used to create new instances of
-	 * schema derived classes for package: com.ccg.webservice.consumer
+	 * schema derived classes for package:
+	 * com.ccg.webservice.myservice.consumer.wsdl
 	 * 
 	 */
 	public ObjectFactory() {
-	}
-
-	/**
-	 * Create an instance of {@link GetValue }
-	 * 
-	 */
-	public GetValue createGetValue() {
-		return new GetValue();
 	}
 
 	/**
@@ -49,11 +43,19 @@ public class ObjectFactory {
 	}
 
 	/**
+	 * Create an instance of {@link GetValue }
+	 * 
+	 */
+	public GetValue createGetValue() {
+		return new GetValue();
+	}
+
+	/**
 	 * Create an instance of {@link JAXBElement }{@code <}{@link GetValue
 	 * }{@code >}}
 	 * 
 	 */
-	@XmlElementDecl(namespace = "http://provider.webservice.ccg.com/", name = "getValue")
+	@XmlElementDecl(namespace = "http://privoder.myservice.webservice.ccg.com/", name = "getValue")
 	public JAXBElement<GetValue> createGetValue(GetValue value) {
 		return new JAXBElement<GetValue>(_GetValue_QNAME, GetValue.class, null, value);
 	}
@@ -63,7 +65,7 @@ public class ObjectFactory {
 	 * }{@code <}{@link GetValueResponse }{@code >}}
 	 * 
 	 */
-	@XmlElementDecl(namespace = "http://provider.webservice.ccg.com/", name = "getValueResponse")
+	@XmlElementDecl(namespace = "http://privoder.myservice.webservice.ccg.com/", name = "getValueResponse")
 	public JAXBElement<GetValueResponse> createGetValueResponse(GetValueResponse value) {
 		return new JAXBElement<GetValueResponse>(_GetValueResponse_QNAME, GetValueResponse.class, null, value);
 	}

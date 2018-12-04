@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.czservice.wsdl;
+package com.ccg.webservice.czservice.consumer.wsdl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,13 +28,13 @@ public class SendServiceService extends Service {
 
 	private final static URL SENDSERVICESERVICE_WSDL_LOCATION;
 	private final static Logger logger = Logger
-			.getLogger(com.ccg.webservice.czservice.wsdl.SendServiceService.class.getName());
+			.getLogger(com.ccg.webservice.czservice.consumer.wsdl.SendServiceService.class.getName());
 
 	static {
 		URL url = null;
 		try {
 			URL baseUrl;
-			baseUrl = com.ccg.webservice.czservice.wsdl.SendServiceService.class.getResource(".");
+			baseUrl = com.ccg.webservice.czservice.consumer.wsdl.SendServiceService.class.getResource(".");
 			url = new URL(baseUrl, "http://localhost:8080/czxt/webservice/sendServie?wsdl");
 		} catch (MalformedURLException e) {
 			logger.warning(
