@@ -18,12 +18,12 @@ import javax.xml.ws.WebServiceClient;
  * <pre>
 * SendServiceService service = new SendServiceService();
 * SendService portType = service.getSendServicePort();
-* portType.sendOrg(...);
+* portType.sendOA(...);
  * </pre>
  * </p>
  * 
  */
-@WebServiceClient(name = "SendServiceService", targetNamespace = "http://czprovide.webservice.oapro.zjcw.com/", wsdlLocation = "http://localhost:8080/czxt/webservice/sendServie?wsdl")
+@WebServiceClient(name = "SendServiceService", targetNamespace = "http://provider.czservice.webservice.oapro.zjcw.com/", wsdlLocation = "http://localhost:8080/czxt/webservice/sendServie?wsdl")
 public class SendServiceService extends Service {
 
 	private final static URL SENDSERVICESERVICE_WSDL_LOCATION;
@@ -50,7 +50,7 @@ public class SendServiceService extends Service {
 
 	public SendServiceService() {
 		super(SENDSERVICESERVICE_WSDL_LOCATION,
-				new QName("http://czprovide.webservice.oapro.zjcw.com/", "SendServiceService"));
+				new QName("http://provider.czservice.webservice.oapro.zjcw.com/", "SendServiceService"));
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class SendServiceService extends Service {
 	 */
 	@WebEndpoint(name = "SendServicePort")
 	public SendService getSendServicePort() {
-		return super.getPort(new QName("http://czprovide.webservice.oapro.zjcw.com/", "SendServicePort"),
+		return super.getPort(new QName("http://provider.czservice.webservice.oapro.zjcw.com/", "SendServicePort"),
 				SendService.class);
 	}
 

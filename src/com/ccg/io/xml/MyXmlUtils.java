@@ -71,7 +71,20 @@ public class MyXmlUtils {
             listElements(e);  //递归展示子元素的内容
         }  
     }  
-	
+	public static void listElements2(Element ele) {  
+		Iterator<Element> eleIterator = (Iterator<Element>)ele.elementIterator(); 
+		while (eleIterator.hasNext()) {  
+			//元素名
+			String eleName = ele.getName();		
+			// 元素的属性：属性名，属性值
+			List<Attribute> eleAttributes = (List<Attribute>)ele.attributes();  
+			//元素值
+			String eleText = ele.getTextTrim(); 
+			
+			System.out.println("【name】：" + eleName +",【text】:" + eleText +"，【attributes】：" + eleAttributes.toString());
+			ele = eleIterator.next();  
+		}
+    } 
 	
 	
 	//文件流InputStream转Document,转Element
