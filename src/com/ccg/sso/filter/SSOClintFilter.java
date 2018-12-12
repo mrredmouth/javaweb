@@ -17,9 +17,18 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ccg.common.CommonUtils;
 import com.ccg.http.HttpUtils;
+import com.ccg.utils.CommonUtils;
 
+/**
+ * 单点登录过滤器：
+  <filter-mapping>
+    <filter-name>SSOClientFilter</filter-name>
+    <url-pattern>/main</url-pattern>
+  </filter-mapping>
+ * @author Administrator
+ *
+ */
 public class SSOClintFilter implements Filter{
 	
 	@Override

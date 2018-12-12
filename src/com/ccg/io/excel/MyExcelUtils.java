@@ -347,7 +347,7 @@ public class MyExcelUtils {
     }
     
     /**
-     * 从路径下载excel
+     * 从路径下载excel，功能同从路径下载文件
      * @param filePath excel所在文件路径
      * @param resp 
      * @throws Exception

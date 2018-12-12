@@ -1,4 +1,4 @@
-package com.ccg.common;
+package com.ccg.utils;
 
 import java.io.IOException;
 import java.util.Properties;

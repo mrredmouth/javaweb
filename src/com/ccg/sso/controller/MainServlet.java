@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ccg.common.CommonUtils;
+import com.ccg.utils.CommonUtils;
 
 /**
+ * 测试方案：
  * 模拟客户端： http://www.crm.com:8088/crm/main
  * 			   http://www.wms.com:8088/wms/main
  * 对应服务端(统一认证中心),模拟在springmvc项目中：
