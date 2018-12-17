@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author Administrator
  *
  */
-public class JavaBasicTime {
+public class TestTime {
 
 	/**
 	 * 获取今天时间,和上月的今天;

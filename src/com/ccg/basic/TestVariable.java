@@ -12,7 +12,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-public class JavaBasicVariable {
+public class TestVariable {
 	private String userName;
 	private String password;
 	private int age = 18;
