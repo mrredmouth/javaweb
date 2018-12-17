@@ -1,4 +1,4 @@
-package com.ccg.utils;
+package com.ccg.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

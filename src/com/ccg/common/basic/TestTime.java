@@ -1,4 +1,4 @@
-package com.ccg.basic;
+package com.ccg.common.basic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

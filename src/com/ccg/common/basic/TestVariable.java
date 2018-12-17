@@ -1,4 +1,4 @@
-package com.ccg.basic;
+package com.ccg.common.basic;
 
 import java.util.ArrayList;
 import java.util.Arrays;

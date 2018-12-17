@@ -1,4 +1,4 @@
-package com.ccg.utils;
+package com.ccg.common.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
