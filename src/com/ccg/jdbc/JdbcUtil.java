@@ -1,7 +1,6 @@
 package com.ccg.jdbc;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,12 +15,12 @@ import org.apache.commons.dbcp2.BasicDataSourceFactory;
 import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-
+import com.ccg.io.properties.MyPropertyUtils;
 
 public class JdbcUtil {
 	private static String driverClassName;
 	private static String url;
-	private static String userName;
+	private static String username;
 	private static String password;
 	private static Properties props = new Properties();
 	private static DataSource ds = null;
@@ -66,12 +65,11 @@ public class JdbcUtil {
 	
 	public static void init() {
 		try {
-			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("jdbc.properties");
-			props.load(is);
+			props = MyPropertyUtils.getPropertiesFromFile("jdbc.properties");
 			driverClassName = props.getProperty("oracle.driverClassName");
-			url = props.getProperty("oracle.url");
-			userName = props.getProperty("oracle.username");
-			password = props.getProperty("oracle.password");
+			url = props.getProperty("url");
+			username = props.getProperty("username");
+			password = props.getProperty("password");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -86,7 +84,7 @@ public class JdbcUtil {
 		try{
 			if(ds == null){
 				//未使用连接池,JDBC最底层，获取连接
-				conn = DriverManager.getConnection(url, userName, password);
+				conn = DriverManager.getConnection(url, username, password);
 			}else{
 				//使用连接池ds:DBCP、Druid
 				conn = ds.getConnection();

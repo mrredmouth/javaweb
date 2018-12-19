@@ -15,7 +15,7 @@ import com.ccg.pojo.User;
  * @author Administrator
  */
 public class OrgUtils {
-	private String fileName = "/czxtdemo3/WebRoot/WEB-INF/download/01_HTML-JS-新.xlsx";
+	private String filePath = "/czxtdemo3/WebRoot/WEB-INF/download/01_HTML-JS-新.xlsx";
 	private String strToSplit = "png;gif;jpg;jpeg";
 	private List<String> strList = Arrays.asList("list1","list2","list3");
 	private List<Object> objList = Arrays.asList("list1",10,new User("Lilly","123456"));
@@ -28,9 +28,9 @@ public class OrgUtils {
 	public void testOrgUtils(){
 		
 		//========================FilenameUtils===============================
-		System.out.println(FilenameUtils.getName(fileName));//获取文件名：XXX.xlsx
-		System.out.println(FilenameUtils.getExtension(fileName));//获取文件拓展名：xlsx
-		System.out.println(FilenameUtils.getBaseName(fileName));//获取文件前缀名：01_HTML-JS-新
+		System.out.println(FilenameUtils.getName(filePath));//获取文件名：XXX.xlsx
+		System.out.println(FilenameUtils.getExtension(filePath));//获取文件拓展名：xlsx
+		System.out.println(FilenameUtils.getBaseName(filePath));//获取文件前缀名：01_HTML-JS-新
 		
 		//========================CollectionUtils===============================
 		System.out.println(Arrays.asList(strToSplit.split(";")));//数组转集合

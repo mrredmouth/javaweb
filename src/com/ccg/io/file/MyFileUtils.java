@@ -14,8 +14,6 @@ import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -26,12 +24,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
+
 
 /**
  * 
  * @author Administrator
  */
 public class MyFileUtils {
+	private static Logger logger = Logger.getLogger(MyFileUtils.class);
 	
 	/**
 	 * 设置下载文件的请求头，响应头;
@@ -295,6 +296,34 @@ public class MyFileUtils {
 		Files.copy(Paths.get(realPath), outputStream);
 		if(closeStream){
 			outputStream.close();
+		}
+	}
+	
+	/**
+	 * 关闭输输入流
+	 * @param is
+	 */
+	public static void free(InputStream is){
+		try{ 
+			if(is != null){ 
+				is.close(); 
+			} 
+		}catch(Exception e){ 
+			logger.error("关闭输入流错误！", e); 
+		}
+	}
+	
+	/**
+	 * 关闭输出流
+	 * @param os
+	 */
+	public static void free(OutputStream os){
+		try{
+			if(os != null){
+				os.close();
+			}
+		}catch(Exception e){
+			logger.error("关闭输出流错误！", e);
 		}
 	}
 }
