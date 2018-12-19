@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
 /**
@@ -56,4 +57,15 @@ public class TestTime {
 		Date lastDate = calendar.getTime(); 
 		System.out.println("上个月： " + dateFormat.format(lastDate));
 	}
+	
+	/**
+	 * DateUtils
+	 */
+	@Test
+	public void testDateUtils(){
+		System.out.println(DateUtils.MILLIS_PER_SECOND);
+		System.out.println(19*60+19);
+		System.out.println(DateUtils.getFragmentInMilliseconds(new Date(), Calendar.DATE));
+	}
+	
 }

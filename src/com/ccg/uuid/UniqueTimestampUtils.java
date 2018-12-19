@@ -24,10 +24,12 @@ public class UniqueTimestampUtils {
 	    long now = System.currentTimeMillis();
 	    while(true) {
 	        long lastTime = LAST_TIME_MS.get();
-	        if (lastTime >= now)
-	            now = lastTime+1;
-	        if (LAST_TIME_MS.compareAndSet(lastTime, now))
-	            return now;
+	        if (lastTime >= now){
+	        	now = lastTime+1;
+	        }
+	        if (LAST_TIME_MS.compareAndSet(lastTime, now)){
+	        	return now;
+	        }
 	    }
 	}
 	

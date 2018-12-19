@@ -13,9 +13,11 @@ public class LoginFilter3 implements javax.servlet.Filter{
 	public LoginFilter3() {
 		System.out.println("创建LoginFilter3");
 	}
+	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 
+	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
 		System.out.println("LoginFilter3.doFilter()--放行之前");
@@ -23,6 +25,7 @@ public class LoginFilter3 implements javax.servlet.Filter{
 		System.out.println("LoginFilter3.doFilter()--放行之后");
 	}
 
+	@Override
 	public void destroy() {
 		
 	}

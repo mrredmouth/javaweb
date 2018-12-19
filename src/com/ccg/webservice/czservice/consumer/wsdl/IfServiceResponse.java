@@ -3,22 +3,23 @@ package com.ccg.webservice.czservice.consumer.wsdl;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>
- * Java class for sendOrg complex type.
+ * Java class for ifServiceResponse complex type.
  * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * 
  * <pre>
- * &lt;complexType name="sendOrg">
+ * &lt;complexType name="ifServiceResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://provider.czservice.webservice.oapro.zjcw.com/}oaProject" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,30 +29,31 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sendOrg", propOrder = { "arg0" })
-public class SendOrg {
+@XmlType(name = "ifServiceResponse", propOrder = { "_return" })
+public class IfServiceResponse {
 
-	protected OaProject arg0;
+	@XmlElement(name = "return")
+	protected String _return;
 
 	/**
-	 * Gets the value of the arg0 property.
+	 * Gets the value of the return property.
 	 * 
-	 * @return possible object is {@link OaProject }
+	 * @return possible object is {@link String }
 	 * 
 	 */
-	public OaProject getArg0() {
-		return arg0;
+	public String getReturn() {
+		return _return;
 	}
 
 	/**
-	 * Sets the value of the arg0 property.
+	 * Sets the value of the return property.
 	 * 
 	 * @param value
-	 *            allowed object is {@link OaProject }
+	 *            allowed object is {@link String }
 	 * 
 	 */
-	public void setArg0(OaProject value) {
-		this.arg0 = value;
+	public void setReturn(String value) {
+		this._return = value;
 	}
 
 }

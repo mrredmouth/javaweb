@@ -25,9 +25,11 @@ import com.ccg.pojo.User;
 public class LoginServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
+	@Override
 	public void init() throws ServletException {
 		System.out.println("LoginServlet.init()");
 	}
+	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.setAttribute("user", 

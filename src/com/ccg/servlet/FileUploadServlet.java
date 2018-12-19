@@ -17,10 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.FilenameUtils;
 
 import com.ccg.exception.MyFileException;
-import com.ccg.io.file.MyFileUtils;
+import com.ccg.io.image.MyImageUtils;
 import com.ccg.pojo.Image;
 import com.ccg.pojo.User;
 
@@ -28,9 +27,11 @@ import com.ccg.pojo.User;
 public class FileUploadServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void init() throws ServletException {
 	}
 	
+	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		//扫描器，扫描req的请求内容,打印到控制台
@@ -52,7 +53,7 @@ public class FileUploadServlet extends HttpServlet{
 			Map<String, Image> binaryMap = new HashMap<String, Image>();//存放图片参数
 			
 			//将req的参数封装到fieldMap中，文件需记录文件名和存储路径
-			MyFileUtils.uploadImage(req,fieldMap,binaryMap);
+			MyImageUtils.uploadImage(req,fieldMap,binaryMap);
 			
 			//将fieldMap数据封装到User对象中，并返回到req中
 			User user = new User();
@@ -70,14 +71,6 @@ public class FileUploadServlet extends HttpServlet{
 		}
 	}
 	public static void main(String[] args) {
-		
-		//FilenameUtils获取不同的路径
-		String path = "c:/123/acb/automan.png";
-		System.out.println(FilenameUtils.getName(path)); //获取文件名称 automan.png
-		System.out.println(FilenameUtils.getBaseName(path)); //获取文件名，不包括拓展名 automan
-		System.out.println(FilenameUtils.getExtension(path)); //获取拓展名 png
-		
-		
 		
 		//输出某网页的源代码
 		InputStream in = null;

@@ -21,10 +21,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hwpf.usermodel.Picture;
 import org.w3c.dom.Document;
 
-
+/**
+ * 
+ * @author Administrator
+ */
 public class PoiExcelToHtml {
-    final static String path = "F:/projects/javaweb/WebRoot/WEB-INF/download/";
-	final static String file = "excelToHtmlDemo.xls";
+    final static String PATH = "F:/projects/javaweb/WebRoot/WEB-INF/download/";
+	final static String FILE = "excelToHtmlDemo.xls";
 	
 	/**
 	 * 将2003的excel文件，转变为静态html文件
@@ -33,7 +36,7 @@ public class PoiExcelToHtml {
 	 */
  public static void main(String args[]) throws Exception {
 
-     InputStream input=new FileInputStream(path+file);
+     InputStream input=new FileInputStream(PATH+FILE);
      HSSFWorkbook excelBook=new HSSFWorkbook(input);
      ExcelToHtmlConverter excelToHtmlConverter = new ExcelToHtmlConverter (DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument() );
      excelToHtmlConverter.processWorkbook(excelBook);
@@ -43,7 +46,7 @@ public class PoiExcelToHtml {
          for (int i = 0; i < pics.size(); i++) {
              Picture pic = (Picture) pics.get (i);
              try {
-                 pic.writeImageContent (new FileOutputStream (path + pic.suggestFullFileName() ) );
+                 pic.writeImageContent (new FileOutputStream (PATH + pic.suggestFullFileName() ) );
              } catch (FileNotFoundException e) {
                  e.printStackTrace();
              }
@@ -63,6 +66,6 @@ public class PoiExcelToHtml {
 
      String content = new String (outStream.toByteArray() );
 
-     FileUtils.writeStringToFile(new File (path, "exportExcel.html"), content, "utf-8");
+     FileUtils.writeStringToFile(new File (PATH, "exportExcel.html"), content, "utf-8");
  }
 }

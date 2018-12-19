@@ -38,6 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * excel工具类 提供读取和写入excel的功能
+ * @author Administrator
  */
 public class MyExcelUtils {
 
@@ -57,7 +58,7 @@ public class MyExcelUtils {
     /**
      * 存储样式,缓存上面三种样式,供创建excel调用。用完后要clear,不同的workbook的样式不可共用，报错
      */
-    private static final HashMap<String, CellStyle> cellStyleMap = new HashMap<>();
+    private static final HashMap<String, CellStyle> CELL_STYLE_MAP = new HashMap<>();
     
     private static int writeExcelNum = 0;
     
@@ -225,7 +226,7 @@ public class MyExcelUtils {
         }
         createBody(sheet, excelSheetPO, wb, version);
         //创建结束后，要clear掉缓存，否则其他请求会沿用此workbook的样式，报错
-        cellStyleMap.clear();
+        CELL_STYLE_MAP.clear();
     }
 
     private static boolean createTitle(Sheet sheet, ExcelSheetPO excelSheetPO, Workbook wb, ExcelVersion version) {
@@ -311,8 +312,8 @@ public class MyExcelUtils {
      */
     private static CellStyle getStyle(String type, Workbook wb) {
 
-        if (cellStyleMap.containsKey(type)) {
-            return cellStyleMap.get(type);
+        if (CELL_STYLE_MAP.containsKey(type)) {
+            return CELL_STYLE_MAP.get(type);
         }
         createCellStyle(wb,HorizontalAlignment.CENTER,(short)16,true);
         
@@ -327,7 +328,7 @@ public class MyExcelUtils {
          	style = createCellStyle(wb,HorizontalAlignment.CENTER,(short)12,false);
         }
         //缓存起来
-        cellStyleMap.put(type, style);
+        CELL_STYLE_MAP.put(type, style);
         return style;
     }
 
@@ -338,10 +339,12 @@ public class MyExcelUtils {
      */
     private static Workbook createWorkbook(ExcelVersion version) {
         switch (version) {
-        case V2003:
-            return new HSSFWorkbook();
-        case V2007:
-            return new XSSFWorkbook();
+	        case V2003:
+	            return new HSSFWorkbook();
+	        case V2007:
+	            return new XSSFWorkbook();
+	        default:
+	        	break;
         }
         return null;
     }

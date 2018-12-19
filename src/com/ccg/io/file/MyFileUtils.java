@@ -1,132 +1,42 @@
 package com.ccg.io.file;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
-import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 
-import com.ccg.exception.MyFileException;
-import com.ccg.pojo.Image;
-
+/**
+ * 
+ * @author Administrator
+ */
 public class MyFileUtils {
-	private static final String ALLOW_IMAGE_TYPE = "png;gif;jpg;jpeg";
 	
 	/**
-	 * 上传图片。形参传值的方式返回两种封装：普通表单和文件表单。
-	 * @param req
-	 * @param fieldMap
-	 * @param binaryMap
-	 */
-	public static void uploadImage(HttpServletRequest req,Map<String,String> fieldMap,Map<String, Image> binaryMap){
-		
-		try {
-			//创建FileItemFactory对象，用于创建FileItem对象，FileItem是浏览器form表单中的表单控件的封装
-			DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
-			ServletFileUpload  fileUpload = new ServletFileUpload(fileItemFactory);
-			
-			fileUpload.setFileSizeMax(2*1024*1024);//设置单个请求单个文件上传的大小限制,2M;对应异常需手动catch
-			fileUpload.setSizeMax(3*1024*1024);//设置单个请求所有文件大小限制,3M;对应异常需手动catch
-			
-			List<FileItem> fileItems = fileUpload.parseRequest(req);
-			Iterator<FileItem> iter = fileItems.iterator();
-			while (iter.hasNext()) {
-			    FileItem item = iter.next();
-
-			    String fieldName = item.getFieldName();//参数名称，普通和文件的都有名称
-			    if (item.isFormField()) {//普通表单控件
-			        String value = item.getString("utf-8");//获取表单参数value值，中文乱码处理
-			        System.out.println(fieldName + ":" + value);
-			        fieldMap.put(fieldName,value);
-			    } else {//文件上传控件
-			    	//item.getName(),获取文件的名称，IE6浏览器获取的是全路径，其他浏览器都获取的XXX.png等。用FilenameUtils.getName()解决
-			    	String fileName = FilenameUtils.getName(item.getName());
-			    	String ext = FilenameUtils.getExtension(fileName);
-			        System.out.println(fieldName + "--" + fileName);
-			        
-			    	//将二进制文件输入到某个文件中，不是目录。文件名相同时，会覆盖，起唯一名：UUID.拓展名
-			    	String newFileName = UUID.randomUUID().toString() + "." + ext;
-			    	ResourceBundle bundle = ResourceBundle.getBundle("app",Locale.CHINA);//寻找app_zh_CN.properties资源文件
-			    	String allowImageTypeStr = bundle.containsKey("allowImageType")?bundle.getString("allowImageType"):ALLOW_IMAGE_TYPE;
-			    	String[] allowImageType = allowImageTypeStr.split(";");
-			    	if(!Arrays.asList(allowImageType).contains(ext.toLowerCase())){
-			    		//throw异常，相当于抛出一个异常，并return。还要经过下面的catch，继续抛出，必须在大的Exception之前catch
-			    		throw new MyFileException("请上传正确的图片格式");
-			    	}
-			        //item.write(new File("F:\\javaLocal"+fileName));
-			    	//讲图片存到服务器的upload中
-			    	String dir = req.getServletContext().getRealPath("/upload");
-			    	item.write(new File(dir,newFileName));
-			    	
-			    	/*图片缓存：图片小于缓存限制，则放到缓存中；超过缓存限制，则放到tomcat的临时目录F:\apache-tomcat-7.0.90-demo\temp*/
-			    	fileItemFactory.setSizeThreshold(20*1024);//设置缓存大小，20KB
-			    	//fileItemFactory.setRepository(repository);//设置临时目录，一般在temp下，不建议修改
-			    	System.out.println(item.isInMemory());//查看是否在缓存中
-			    	
-			    	Image image = new Image();
-			    	image.setImageName(fileName);
-			    	image.setImageUrl("/upload/" + newFileName);
-			    	binaryMap.put(fieldName,image);
-			    	
-			    }
-			}
-		} catch(MissingResourceException e){
-			e.printStackTrace();
-		} catch(FileSizeLimitExceededException e){	//将文件大小的两个异常跑给自定义异常，然后返回给调用者
-			throw new MyFileException("单个上传文件大小异常，超过限制2M",e);
-		} catch(SizeLimitExceededException e){
-			throw new MyFileException("所有上传文件大小异常，超过限制3M",e);
-		} catch (MyFileException e){
-			throw e;//继续抛出给调用者，UploadServlet
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 从路径下载文件
-	 * @param realPath
-	 * @param outputStream
-	 * @param closeStream 是否关闭输出流
-	 * @throws IOException
-	 */
-	public static void downloadFile(String realPath, ServletOutputStream outputStream, boolean closeStream) throws IOException{
-		
-		//文件拷贝，从拷贝到输出流。resp的getWriter字节流和getOutputStream字符流区别，文件下载是二进制，必须字符流
-		Files.copy(Paths.get(realPath), outputStream);
-		if(closeStream){
-			outputStream.close();
-		}
-	}
-	
-	/**
-	 * 设置下载文件的请求头，响应头;同时给浏览器下载的文件名编码兼容
+	 * 设置下载文件的请求头，响应头;
+	 * 同时给浏览器下载的文件名编码兼容
+	 * 可设置文件类型已测：图片、word、excel
 	 * @param req
 	 * @param resp
 	 * @param realPath
@@ -135,7 +45,6 @@ public class MyFileUtils {
 	public static void setDownloadHead(HttpServletRequest req, HttpServletResponse resp,String realPath) throws IOException{
 
 		String fileName = FilenameUtils.getName(realPath);
-		
 		resp.reset(); // 非常重要
 		//设置文件保存名称。区分IE浏览器，中文乱码解决
 		String userAgent = req.getHeader("User-Agent");
@@ -146,13 +55,53 @@ public class MyFileUtils {
 		}
 		
 		//设置内容类型。IE会直接打开，设置让浏览器不直接打开，而是弹出下载框，保存文件
-    	resp.setContentType("application/x-msdownload");
+		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
+    	resp.setContentType(getMineType(fileType) + "; charset=GBK");
     	//设置响应头，文件名称
     	resp.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 	}
 	
+	/**
+	 * 获取resp.setContentType中的mineType类型
+	 * @param ftype
+	 * @return
+	 */
+	public static String getMineType(String ftype){
+		String mineType = "application/octet-stream";
+		if("doc".equals(ftype.toLowerCase())){
+			mineType="application/msword";
+		}if("docx".equals(ftype.toLowerCase())){
+			mineType="application/msword";
+		}else if("ppt".equals(ftype.toLowerCase())){
+			mineType="application/vnd.ms-powerpoint";
+		}else if("pdf".equals(ftype.toLowerCase())){
+			mineType="application/pdf";
+		}else if("xls".equals(ftype.toLowerCase())||"xlsx".equals(ftype.toLowerCase())){
+			mineType="application/vnd.ms-excel";
+		}else if("bmp".equals(ftype.toLowerCase())){
+			mineType="image/bmp";
+		}else if("jpeg".equals(ftype.toLowerCase())||"jpg".equals(ftype.toLowerCase())){
+			mineType="image/jpeg";
+		}else if("gz".equals(ftype.toLowerCase())){
+			mineType="application/x-gzip";
+		}else if("zip".equals(ftype.toLowerCase())){
+			mineType="application/zip";
+		}else if("txt".equals(ftype.toLowerCase())){
+			mineType="text/plain";
+		}
+		return mineType;	
+	}
 	
-	
+	/**
+	 * 创建文件目录 filePath = fileRootPath + fileName
+	 * @param fileRootPath
+	 */
+	public static void createFileDir(String fileRootPath) {
+		File mkdir = new File(fileRootPath);
+		if(!mkdir.exists()) {
+			mkdir.mkdirs();
+		}
+	}
 	
     /**
      * 清空文件夹里的内容
@@ -208,50 +157,144 @@ public class MyFileUtils {
 	        }
     	}
     }
-    /**
-     * 将数据库数据ResultSet写到文件.Txt里
-     */
-
-	public static void writeResultSetToTxt(String[] args) throws Exception {
-        Connection conn = null;
-        //测试库
-        String url="jdbc:oracle:thin:@134.96.188.186:1521:HZCW";
-        String username="zjcw";  
-        String password="qwer1234";
-  
-        try {
+    
+	/**
+	 * 将暂存在服务器上的文件转为字节数组
+	 * @param sourcePath 暂存到服务器上的文件地址
+	 * @return
+	 * @throws ServletException
+	 */
+	public static byte[] readBytesFromFile(String sourcePath) throws ServletException {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			FileInputStream fin = new FileInputStream(new File(sourcePath));
+			byte buf[] = new byte[fin.available()];
 			
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            
-            //连接测试环境
-            conn = DriverManager.getConnection(url,username,password);
-            
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from daily_debt_total");// executeUpdate语句会返回一个受影响的行数，如果返回-1就没有成功
-             
-            FileOutputStream fos = new FileOutputStream("E:\\all_tables.dat",true);
-            //fos.write(rs.getInt(1));
-            PrintStream ps = new PrintStream(fos);
-            while (rs.next()) {
-                System.out.println(rs.getString(1) +","+rs.getString(2) +"," +rs.getString(3) +","+rs.getString(4) + "," + rs.getString(5)+ "," + rs.getString(6));// 入如果返回的是int类型可以用getInt()
-             
-                String stringDes = rs.getString(1) +","+rs.getString(2) +"," +rs.getString(3) +","+rs.getString(4) + "," + rs.getString(5) + "," + rs.getString(6);
-                //FileOutputStream fos = new FileOutputStream("E:\\ok.txt",true);
-                //fos.write(rs.getInt(1));
-                //PrintStream p = new PrintStream(fos);
-                ps.println(stringDes);
-            }
-          
-            ps.close();
-            fos.flush();
-             
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            conn.close();
+			@SuppressWarnings("unused")
+			int len = 0;
+			for (len = -1; (len = fin.read(buf)) != -1;){
+				bos.write(buf);
+			}
+			byte res[] = bos.toByteArray();
+			bos.close();
+			fin.close();
+			return res;
+		} catch (Exception e) {
+			throw new ServletException(e.toString());
+		} 
+	}
+
+	/**
+	 * 读取url网页的源代码，string输出
+	 */
+	public static String readStringFromUrl(URL url){
+
+		String result = "";
+		//输出某网页的源代码
+		InputStream in = null;
+		 try {
+		   in = url.openStream();
+		   InputStreamReader inR = new InputStreamReader( in );
+		   BufferedReader buf = new BufferedReader( inR );
+		   String line;
+		   StringBuffer sb = new StringBuffer();
+		   while ( ( line = buf.readLine() ) != null ) {
+			   sb.append(line);
+			   sb.append("\n");
+		   }
+		   result = sb.toString();
+		   //直接用IOUtils方法替代上面一大段,commons-io包里
+		   //System.out.println( IOUtils.toString( in ) );
+		 } catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * 将字符串写到输出流
+	 * @param filePath 要写出的文件
+	 * @param fos OutputStream 输出流，可以是文件，可以是response等
+	 * @throws IOException
+	 */
+	public static void writeStringToOutputStream(List<String> writeStrList,OutputStream os) throws IOException{
+		
+		//OutputStream是顶级接口，FileOutputStream是其实现类
+		PrintStream ps = new PrintStream(os);
+        for(String writeStr:writeStrList){
+        	ps.println(writeStr);
         }
-  
+        ps.close();
+	}
+
+	/**
+     * 将字符串换行写到文件里
+     * @param writeStr 要写出的字符串
+     * @param FilePath 输出文件的全路径，例："E:\\all_tables.dat"
+     * @param appendFlag true:表示从文件末尾追加写入。false:清空原有的文件内容，从开头写入
+     * @throws IOException 
+     */
+    public static void writeStringToFile(List<String> writeStrList,String filePath,Boolean appendFlag) throws IOException{
+    	
+    	// FileOutputStream 第二个参数：是否追加。true:字节写入文件的末尾 
+    	OutputStream fos = new FileOutputStream(filePath,appendFlag);
+    	writeStringToOutputStream(writeStrList,fos);
+        fos.flush();
+        fos.close();
     }
+
+	/**
+	 * 将文件写到输出流
+	 * @param filePath 要写出的文件
+	 * @param outputStream 输出流，可以是文件，可以是response等
+	 * @throws IOException
+	 */
+	public static void writeFileToOutputStream(String filePath,OutputStream outputStream) throws IOException{
+		InputStream is = new FileInputStream(new File(filePath));
+		BufferedInputStream bis = new BufferedInputStream(is);
+		byte[] buf = new byte[4096]; //缓冲区
+        int len = 0;
+        while ((len = bis.read(buf)) > 0) {
+        	outputStream.write(buf, 0, len);
+        }
+        outputStream.flush();
+        bis.close();
+	}
+	/**
+	 * 将文件写到response中，即浏览器下载文件
+	 * @param filePath
+	 * @param response
+	 * @throws IOException
+	 */
+	public static void writeFileToResponse(String filePath,HttpServletResponse response) throws IOException{
+		OutputStream outputStream = response.getOutputStream();
+		MyFileUtils.writeFileToOutputStream(filePath,outputStream);
+        response.flushBuffer();
+        outputStream.close();
+	}
+
+	/**
+	 * 从路径下载文件
+	 * @param realPath 服务器文件所在的路径
+	 * @param outputStream 输出流，将文件输出到浏览器的输出流，实现下载
+	 * @param closeStream 是否关闭输出流
+	 * @throws IOException
+	 */
+	public static void writeFileToResponse(String realPath, ServletOutputStream outputStream, boolean closeStream) throws IOException{
+		
+		//文件拷贝，从拷贝到输出流。resp的getWriter字节流和getOutputStream字符流区别，
+		//文件下载是二进制，必须字符流
+		Files.copy(Paths.get(realPath), outputStream);
+		if(closeStream){
+			outputStream.close();
+		}
+	}
 }

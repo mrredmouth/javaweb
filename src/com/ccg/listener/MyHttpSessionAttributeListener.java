@@ -12,14 +12,17 @@ import javax.servlet.http.HttpSessionBindingEvent;
 @WebListener
 public class MyHttpSessionAttributeListener implements HttpSessionAttributeListener{
 
+	@Override
 	public void attributeAdded(HttpSessionBindingEvent se) {
 		System.out.println("属性添加："+se.getName()+","+se.getValue());
 	}
 
+	@Override
 	public void attributeRemoved(HttpSessionBindingEvent se) {
 		System.out.println("属性删除："+se.getName()+","+se.getValue());
 	}
 
+	@Override
 	public void attributeReplaced(HttpSessionBindingEvent se) {
 		System.out.println("属性替换："+se.getName()+",旧值："+se.getValue()+",新值："+se.getSession().getAttribute(se.getName()));
 	}

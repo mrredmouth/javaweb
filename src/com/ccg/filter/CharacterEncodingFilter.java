@@ -21,12 +21,14 @@ public class CharacterEncodingFilter implements javax.servlet.Filter{
 	
 	private String encoding;
 	private boolean encodingForce = false;
+	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.encoding = filterConfig.getInitParameter("encoding");
 		//Boolean.valueOf方法，只有在值为true的时候返回true，其他任何情况(空，false，其他字符)都返回false
 		this.encodingForce = Boolean.valueOf(filterConfig.getInitParameter("encodingForce"));
 	}
 
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
@@ -37,6 +39,7 @@ public class CharacterEncodingFilter implements javax.servlet.Filter{
 		chain.doFilter(req, resp);
 	}
 
+	@Override
 	public void destroy() {
 	}
 

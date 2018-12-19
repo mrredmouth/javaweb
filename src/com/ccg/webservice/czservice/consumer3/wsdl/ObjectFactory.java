@@ -1,5 +1,5 @@
 
-package com.ccg.webservice.czservice.consumer.wsdl;
+package com.ccg.webservice.czservice.consumer3.wsdl;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -8,8 +8,8 @@ import javax.xml.namespace.QName;
 
 /**
  * This object contains factory methods for each Java content interface and Java
- * element interface generated in the com.ccg.webservice.czservice.consumer.wsdl
- * package.
+ * element interface generated in the
+ * com.ccg.webservice.czservice.consumer3.wsdl package.
  * <p>
  * An ObjectFactory allows you to programatically construct new instances of the
  * Java representation for XML content. The Java representation of XML content
@@ -29,18 +29,10 @@ public class ObjectFactory {
 	/**
 	 * Create a new ObjectFactory that can be used to create new instances of
 	 * schema derived classes for package:
-	 * com.ccg.webservice.czservice.consumer.wsdl
+	 * com.ccg.webservice.czservice.consumer3.wsdl
 	 * 
 	 */
 	public ObjectFactory() {
-	}
-
-	/**
-	 * Create an instance of {@link IfServiceResponse }
-	 * 
-	 */
-	public IfServiceResponse createIfServiceResponse() {
-		return new IfServiceResponse();
 	}
 
 	/**
@@ -49,6 +41,14 @@ public class ObjectFactory {
 	 */
 	public IfService createIfService() {
 		return new IfService();
+	}
+
+	/**
+	 * Create an instance of {@link IfServiceResponse }
+	 * 
+	 */
+	public IfServiceResponse createIfServiceResponse() {
+		return new IfServiceResponse();
 	}
 
 	/**

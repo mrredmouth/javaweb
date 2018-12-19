@@ -32,9 +32,11 @@ public class HelloServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private String encoding;
+	@Override
 	public void init() throws ServletException {
 		System.out.println("HelloServlet.init()");
 	}
+	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		

@@ -10,6 +10,10 @@ import org.junit.Test;
 
 import com.ccg.pojo.User;
 
+/**
+ * Arrays.asList(),FilenameUtils,StringUtils
+ * @author Administrator
+ */
 public class OrgUtils {
 	private String fileName = "/czxtdemo3/WebRoot/WEB-INF/download/01_HTML-JS-新.xlsx";
 	private String strToSplit = "png;gif;jpg;jpeg";

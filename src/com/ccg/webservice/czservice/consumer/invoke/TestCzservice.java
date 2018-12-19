@@ -8,34 +8,45 @@ import javax.xml.ws.Service;
 
 import org.junit.Test;
 
-import com.ccg.webservice.czservice.consumer.wsdl.SendService;
-import com.ccg.webservice.czservice.consumer.wsdl.SendServiceService;
+import com.ccg.webservice.czservice.consumer.wsdl.SendCzService;
+import com.ccg.webservice.czservice.consumer.wsdl.SendCzServiceService;
 
 /**
- * 测试从czxt中得到的接口：http://localhost:8080/czxt/webservice/sendServie?wsdl
+ * 两种webservice调用方式。
+ * 测试从czxt中得到的webservice接口：(生产环境)
+ * http://134.96.245.118:7001/czxt/webservice/sendCzService?wsdl
  * @author Administrator
  *
  */
 public class TestCzservice {
-	
+
+	private static String info="<?xml version=\'1.0\' encoding=\'gb2312\'?>"+
+			   "<info>"+
+			   "<documentID>CZ10312C3B67FB48E</documentID>"+
+			   "<userLoginname>testdyf.zj</userLoginname>"+
+			   "<status>办结</status>"+
+			   "</info>";
+	/**
+	 * 调用方式一：（财智系统生产环境接口调用）
+	 * http://134.96.245.118:7001/czxt/webservice/sendCzService?wsdl
+	 */
 	@Test
-	 public static void invokeDemo1(String[] args) { 
-		 //调用webservice 
-		 SendService hello=new SendServiceService().getSendServicePort(); 
-		 boolean sendOA = hello.sendOA("1212");
-		 System.out.println(sendOA); 
-		 System.out.println(hello.sendOA("zhoujian")); 
-		 /*hello.sendOrg(new OaProject());*/
+	 public void invokeDemo1() { 
+		 SendCzService sendCzService=new SendCzServiceService().getSendCzServicePort(); 
+		 System.out.println(sendCzService.ifService("OA_FEEDBACK", "$2018_oabj_WEBCLIENT$","ZJCZ_OABJ", "0", info));
 	}
 	 
+	/**
+	 * 调用方式二：（财智系统生产环境接口调用）
+	 * http://134.96.245.118:7001/czxt/webservice/sendCzService?wsdl
+	 */
 	 @Test
-	 public void invokeDemo2(String[] args) throws MalformedURLException { 
-		URL url = new URL("http://localhost:8080/czxt/webservice/sendServie?wsdl");  
-		QName qName = new QName("http://czprovide.webservice.oapro.zjcw.com/", "SendServiceService");  
+	 public void invokeDemo2() throws MalformedURLException { 
+		URL url = new URL("http://134.96.245.118:7001/czxt/webservice/sendCzService?wsdl");  
+		QName qName = new QName("http://provider.czservice.webservice.oapro.zjcw.com/", "SendCzServiceService");  
 		Service service = Service.create(url, qName);  
-		SendService sendService = service.getPort(SendService.class);  
-		System.out.println(sendService.sendOA("1212")); 
-		System.out.println(sendService.sendOA("zhoujian")); 
+		SendCzService sendCzService = service.getPort(SendCzService.class);  
+		 System.out.println(sendCzService.ifService("OA_FEEDBACK", "$2018_oabj_WEBCLIENT$","ZJCZ_OABJ", "0", info));
 	} 
 }
 

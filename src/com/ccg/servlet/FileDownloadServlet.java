@@ -17,6 +17,7 @@ public class FileDownloadServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 
@@ -29,7 +30,7 @@ public class FileDownloadServlet extends HttpServlet{
 		String realPath = req.getServletContext().getRealPath("/WEB-INF/download/"+fileName);
 		
 		MyFileUtils.setDownloadHead(req, resp, realPath);
-		MyFileUtils.downloadFile(realPath, resp.getOutputStream(),true);
+		MyFileUtils.writeFileToResponse(realPath, resp.getOutputStream(),true);
 		
 	}
 }

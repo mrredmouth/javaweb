@@ -24,8 +24,9 @@ public class MyXmlUtils {
 	 * @throws DocumentException
 	 */
 	public static Document parse(File file) throws DocumentException {
-		if (!file.exists())
+		if (!file.exists()){
 			return null;
+		}
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(file);
 		return document;

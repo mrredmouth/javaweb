@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ccg.utils.CommonUtils;
+import com.ccg.common.utils.CommonUtils;
 
 /**
  * 测试方案：
@@ -23,9 +23,11 @@ import com.ccg.utils.CommonUtils;
 public class MainServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
+	@Override
 	public void init() throws ServletException {
 		System.out.println("MainServlet.init()");
 	}
+	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.getContextPath();   		//浏览器访问的上下文路径 /crm
