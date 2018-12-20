@@ -32,8 +32,7 @@ public class TestMyJsonUtils {
         System.out.println("班级为："+class_name);  
           
         JSONArray members=my_json.getJSONArray("members");  
-        for(int i=0;i<members.length();i++)  
-        {  
+        for(int i=0;i<members.length();i++) {  
             JSONObject member=(JSONObject)members.get(i);  
             System.out.println("姓名："+member.getString("name")+" 年龄："+member.getInt("age")  
                     +" 成绩："+member.getInt("score"));  

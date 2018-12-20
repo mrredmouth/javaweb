@@ -1,15 +1,15 @@
-package com.ccg.uuid;
+package com.ccg.time;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Creating a unique timestamp in Java
+ * 获取时间戳TimeStamp 工具类，unique唯一编码,可用于数据库主键，uuid结合等
  * @author Administrator
- *
  */
-public class UniqueTimestampUtils {
+public class MyTimeStampUtils {
+
 	
 	private static final AtomicLong LAST_TIME_MS = new AtomicLong();
 	
@@ -55,10 +55,9 @@ public class UniqueTimestampUtils {
 	 */
 	private static Object SYNCHRONIZER = new Object();
 	public static String getSynchronizedTime() {
-		long ut = uniqueNanoTime();
+		long ut = System.nanoTime();
 		synchronized(SYNCHRONIZER) {
 			return StringUtils.leftPad(Long.toHexString(ut).toUpperCase(), 16, '0');
 		}
 	}
-	
 }

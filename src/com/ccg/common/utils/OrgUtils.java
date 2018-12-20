@@ -27,21 +27,27 @@ public class OrgUtils {
 	@Test
 	public void testOrgUtils(){
 		
-		//========================FilenameUtils===============================
+		//1、FilenameUtils
 		System.out.println(FilenameUtils.getName(filePath));//获取文件名：XXX.xlsx
 		System.out.println(FilenameUtils.getExtension(filePath));//获取文件拓展名：xlsx
 		System.out.println(FilenameUtils.getBaseName(filePath));//获取文件前缀名：01_HTML-JS-新
 		
-		//========================CollectionUtils===============================
+		//2、CollectionUtils
 		System.out.println(Arrays.asList(strToSplit.split(";")));//数组转集合
 		System.out.println(CollectionUtils.isNotEmpty(objList));//判断集合是否为空，不管里面存的什么对象
 
-		//========================StringUtils===============================
+		//3、StringUtils
 		System.out.println(StringUtils.join(strList, ","));
 		//blank:空格表示空；empty:空格表示非空。其他两者一致
 		System.out.println(StringUtils.isNotBlank(null)+","+StringUtils.isNotBlank("")+","+StringUtils.isNotBlank(" "));
 		System.out.println(StringUtils.isNotEmpty(null)+","+StringUtils.isNotEmpty("")+","+StringUtils.isNotEmpty(" "));
-		
+		/**
+		 * StringUtils.leftPad(String str, int size, char padChar)
+		 * 返回长度为size或者str的字符串：
+		 * 如果str长度小于5，则左边用padChar补充		StringUtils.leftPad("bat", 5, 'z')  = "zzbat"
+		 * 如果str长度大于5，则返回str	StringUtils.leftPad("battteeeeet", 5, 'z')  = "battteeeeet"
+		 */
+		System.out.println(StringUtils.leftPad("bat", 5, 'z'));
 	}
 	
 	/**
