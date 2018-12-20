@@ -35,6 +35,8 @@ public class HelloServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		System.out.println("HelloServlet.init()");
+		ServletContext servletContext = super.getServletContext();
+		System.out.println("contextConfigLocation:"+servletContext.getInitParameter("contextConfigLocation"));
 	}
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)

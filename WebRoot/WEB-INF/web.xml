@@ -10,7 +10,7 @@
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/applicationContext*.xml</param-value>
+    <param-value>classpath:applicationContext*.xml</param-value>
   </context-param>
   
   <!-- 创建监听器方式：1)xml配置方式;2)注解方式@WebListener。
