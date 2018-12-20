@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ccg.common.utils.CommonUtils;
 import com.ccg.http.HttpUtils;
+import com.ccg.io.properties.MyPropertyUtils;
 
 /**
  * 单点登录过滤器：
@@ -48,7 +49,7 @@ public class SSOClintFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 
-		Properties props = CommonUtils.getProperties("sso.properties");
+		Properties props = MyPropertyUtils.getPropertiesFromFile("sso.properties");
 		
 		//1、判断是否有局部会话。
 		HttpSession session = req.getSession();

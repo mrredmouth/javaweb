@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ccg.common.utils.CommonUtils;
+import com.ccg.io.properties.MyPropertyUtils;
 
 /**
  * 测试方案：
@@ -37,7 +38,7 @@ public class MainServlet extends HttpServlet{
 		System.out.println(req.getRequestURL().toString().substring(0,number) + req.getContextPath());  //上下文路径地址
 		
 		//调用sso的登出方法
-		req.setAttribute("serverLogOutUrl", CommonUtils.getProperties("sso.properties").get("server-url-prefix").toString() + "/logOut");
+		req.setAttribute("serverLogOutUrl", MyPropertyUtils.getPropertiesFromFile("sso.properties").get("server-url-prefix").toString() + "/logOut");
 		req.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(req,resp);
 		
 	}

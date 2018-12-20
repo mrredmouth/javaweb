@@ -19,7 +19,7 @@ public class MyTimeUtils {
 	 * @param date new Date()
 	 * @return
 	 */
-    public String getDateFormatStr(String formatStr , Date date){
+    public static String getDateFormatStr(String formatStr , Date date){
     	SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
         return sdf.format(date);
     }   
@@ -29,7 +29,7 @@ public class MyTimeUtils {
      * @param date
      * @return
      */
-    public String getDateFormatStr(Date date){
+    public static String getDateFormatStr(Date date){
     	String result = "";
     	synchronized (SIMPLE_DATE_FORMAT){
     		result = SIMPLE_DATE_FORMAT.format(date);

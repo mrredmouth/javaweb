@@ -9,8 +9,8 @@ import com.ccg.io.file.MyFileUtils;
 public class MyPropertyUtils {
 	
 	/**
-	 * 获取properties文件的属性键值对。如：jdbc.properties
-	 * @param fileName
+	 * 获取properties文件的属性键值对。
+	 * @param fileName 如：jdbc.properties
 	 * @return
 	 * @throws IOException
 	 */
@@ -18,7 +18,9 @@ public class MyPropertyUtils {
 		Properties props = new Properties();
 		InputStream is = null;
 		try {
-			is = Thread.currentThread().getContextClassLoader().getResourceAsStream("jdbc.properties");
+			//两种获取流的方式都可以
+			//is = CommonUtils.class.getClassLoader().getResourceAsStream(fileName);
+			is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
 			props.load(is);
 		} catch (Exception e) {
 			e.printStackTrace();

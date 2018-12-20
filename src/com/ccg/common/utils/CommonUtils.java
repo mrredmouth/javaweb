@@ -1,10 +1,7 @@
 package com.ccg.common.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -13,21 +10,6 @@ import javax.script.ScriptException;
 import org.dom4j.DocumentException;
 
 public class CommonUtils {
-	
-	/**
-	 * 获取配置文件的properties键值对
-	 * @param fileName
-	 * @return
-	 * @throws IOException
-	 */
-	public static Properties getProperties(String fileName) throws IOException{
-		//InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-		//两种获取流的方式都可以
-		InputStream is = CommonUtils.class.getClassLoader().getResourceAsStream(fileName);
-		Properties props = new Properties();
-		props.load(is);
-		return props;
-	}
 	
 	/**
 	 * 计算js表达式结果：逻辑表达式、算术表达式等

@@ -6,11 +6,13 @@ import java.util.Properties;
 import org.dom4j.DocumentException;
 import org.junit.Test;
 
+import com.ccg.io.properties.MyPropertyUtils;
+
 public class TestCommonUtils {
 	
 	@Test
 	public void testProp() throws DocumentException, IOException{
-		Properties properties = CommonUtils.getProperties("sso.properties");
+		Properties properties = MyPropertyUtils.getPropertiesFromFile("sso.properties");
 		System.out.println(properties);
 	}
 	
