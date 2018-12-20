@@ -9,11 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.FilenameUtils;
-
 import com.ccg.base.MapBean;
 import com.ccg.base.dao.impl.BaseServiceImpl;
 import com.ccg.io.file.MyFileUtils;
