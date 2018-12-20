@@ -1,5 +1,6 @@
 package com.ccg.time;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,6 +23,17 @@ public class MyDateFormatUtils {
     public static String getDateFormatStr(String formatStr , Date date){
     	SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
         return sdf.format(date);
+    }   
+    /**
+     * 将字符串转为日期，formatStr与dateStr格式必须一致
+     * @param formatStr "yyyyMM"
+     * @param dateStr "201809"
+     * @return
+     * @throws ParseException 
+     */
+    public static Date getDateFormatStr(String formatStr , String dateStr) throws ParseException{
+    	SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
+    	return sdf.parse(dateStr);
     }   
     
     /**

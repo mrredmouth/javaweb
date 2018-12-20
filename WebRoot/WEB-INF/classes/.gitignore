@@ -1,2 +1,8 @@
+/app_zh_CN.properties
 /com/
+/jars.txt
+/jdbc.properties
+/log4j.xml
 /log4j2.xml
+/readme.txt
+/sso.properties

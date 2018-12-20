@@ -2,7 +2,7 @@ package com.ccg.thread;
 
 import org.junit.Test;
 
-import com.ccg.uuid.UniqueTimestampUtils;
+import com.ccg.time.MyTimeStampUtils;
 
 public class MyThreadUtilsTest {
 	/**
@@ -14,7 +14,7 @@ public class MyThreadUtilsTest {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					System.out.println(UniqueTimestampUtils.getSynchronizedTime());
+					System.out.println(MyTimeStampUtils.getSynchronizedTime());
 				}
 			}).start();
 		}
