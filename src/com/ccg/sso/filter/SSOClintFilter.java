@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ccg.common.utils.CommonUtils;
 import com.ccg.http.HttpUtils;
 import com.ccg.io.properties.MyPropertyUtils;
 

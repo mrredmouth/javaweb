@@ -40,12 +40,12 @@ public class MyFileUtils {
 	 * 可设置文件类型已测：图片、word、excel
 	 * @param req
 	 * @param resp
-	 * @param realPath
+	 * @param filePath 文件全路径
 	 * @throws IOException
 	 */
-	public static void setDownloadHead(HttpServletRequest req, HttpServletResponse resp,String realPath) throws IOException{
+	public static void setDownloadHead(HttpServletRequest req, HttpServletResponse resp,String filePath) throws IOException{
 
-		String fileName = FilenameUtils.getName(realPath);
+		String fileName = FilenameUtils.getName(filePath);
 		resp.reset(); // 非常重要
 		//设置文件保存名称。区分IE浏览器，中文乱码解决
 		String userAgent = req.getHeader("User-Agent");
@@ -226,7 +226,7 @@ public class MyFileUtils {
 	 * @param fos OutputStream 输出流，可以是文件，可以是response等
 	 * @throws IOException
 	 */
-	public static void writeStringToOutputStream(List<String> writeStrList,OutputStream os) throws IOException{
+	public static void writeStringToOs(List<String> writeStrList,OutputStream os) throws IOException{
 		
 		//OutputStream是顶级接口，FileOutputStream是其实现类
 		PrintStream ps = new PrintStream(os);
@@ -247,27 +247,35 @@ public class MyFileUtils {
     	
     	// FileOutputStream 第二个参数：是否追加。true:字节写入文件的末尾 
     	OutputStream fos = new FileOutputStream(filePath,appendFlag);
-    	writeStringToOutputStream(writeStrList,fos);
+    	writeStringToOs(writeStrList,fos);
         fos.flush();
         fos.close();
     }
-
-	/**
-	 * 将文件写到输出流
-	 * @param filePath 要写出的文件
-	 * @param outputStream 输出流，可以是文件，可以是response等
-	 * @throws IOException
-	 */
-	public static void writeFileToOutputStream(String filePath,OutputStream outputStream) throws IOException{
-		InputStream is = new FileInputStream(new File(filePath));
+    /**
+     * 将输入流写到输出流中
+     * @param is 输入流InputStream：文件流 FileInputStream，二进制流 BufferedInputStream（数据库读取时）
+     * @param os 输出流OutputStream：文件流FileOutputStream，浏览器流ServletOutputStream（浏览器下载文件时），
+     * @throws IOException
+     */
+    public static void writeIsToOs(InputStream is,OutputStream os) throws IOException{
 		BufferedInputStream bis = new BufferedInputStream(is);
 		byte[] buf = new byte[4096]; //缓冲区
         int len = 0;
         while ((len = bis.read(buf)) > 0) {
-        	outputStream.write(buf, 0, len);
+        	os.write(buf, 0, len);
         }
-        outputStream.flush();
+        os.flush();
         bis.close();
+	}
+	/**
+	 * 将文件写到输出流
+	 * @param filePath 要写出的文件,文件流用FileInputStream
+	 * @param outputStream 输出流，可以是文件，可以是response等
+	 * @throws IOException
+	 */
+	public static void writeFileToOs(String filePath,OutputStream os) throws IOException{
+		InputStream is = new FileInputStream(new File(filePath));
+		MyFileUtils.writeIsToOs(is,os);
 	}
 	/**
 	 * 将文件写到response中，即浏览器下载文件
@@ -277,7 +285,7 @@ public class MyFileUtils {
 	 */
 	public static void writeFileToResponse(String filePath,HttpServletResponse response) throws IOException{
 		OutputStream outputStream = response.getOutputStream();
-		MyFileUtils.writeFileToOutputStream(filePath,outputStream);
+		MyFileUtils.writeFileToOs(filePath,outputStream);
         response.flushBuffer();
         outputStream.close();
 	}

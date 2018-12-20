@@ -6,8 +6,8 @@ public class MyStringUtils {
 	
     /**
      * Description: 字符串按分隔符转换成数组
-     * @param str 需要分割的字符串
-     * @param splitDot 分隔符
+     * @param str 需要分割的字符串 如：1,2,3, 或者1,2,3
+     * @param splitDot 分隔符 如：,
      */
     public static String[] strToArray(String str, String splitDot) {
 
@@ -20,4 +20,14 @@ public class MyStringUtils {
         }
         return result;
     }
+    
+
+	/**
+	 * 判断某对象是否为空
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNull(Object str) {
+		return (str == null || str.toString().trim().length() <= 0);
+	}
 }

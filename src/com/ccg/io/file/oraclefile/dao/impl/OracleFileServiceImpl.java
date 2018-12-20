@@ -1,5 +1,6 @@
-package com.ccg.io.file.upload.dao.impl;
+package com.ccg.io.file.oraclefile.dao.impl;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -8,15 +9,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FilenameUtils;
+
+import com.ccg.base.MapBean;
 import com.ccg.base.dao.impl.BaseServiceImpl;
 import com.ccg.io.file.MyFileUtils;
-import com.ccg.io.file.upload.dao.IUploadFileToOracle;
+import com.ccg.io.file.oraclefile.dao.IOracleFileService;
+import com.ccg.io.file.oraclefile.model.OracleFile;
 import com.ccg.jdbc.JdbcUtil;
 import oracle.sql.BLOB;
 
-public class UploadFileToOracleImpl extends BaseServiceImpl implements IUploadFileToOracle{
-
+/**
+ * 文件以二进制形式保存到oracle，上传、下载
+ * @author Administrator
+ *
+ */
+public class OracleFileServiceImpl extends BaseServiceImpl implements IOracleFileService{
 
 	@SuppressWarnings("resource")
 	@Override
@@ -108,4 +119,69 @@ public class UploadFileToOracleImpl extends BaseServiceImpl implements IUploadFi
 		return null;
 	}
 
+	/**
+	 * 获取oracle中的blob二进制文件流
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public OracleFile getOaProFile(MapBean map) {
+		Connection con=null;
+		Statement st = null;
+		ResultSet rs = null;
+		OracleFile oracleFile = new OracleFile();
+		try {
+			con = getConnection();
+			st = con.createStatement();
+			String strSql = " select * from OA_PROJECT_FILE where file_id = " + map.getString("file_id");
+			rs = st.executeQuery(strSql);
+            if (rs.next()) {
+            	oracleFile.setBlob(rs.getBlob("FILE_CONTENT"));
+            	oracleFile.setName(rs.getString("FILE_NAME"));
+            	//两种方式从数据库的Blob字段获取流
+            	/*LobHandler lobHandler = new DefaultLobHandler();
+            	oracleFile.setIs(lobHandler.getBlobAsBinaryStream(rs,"FILE_CONTENT"));*/
+            	oracleFile.setIs(rs.getBinaryStream("FILE_CONTENT"));
+            }
+            rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.free(rs, st, con);
+		}
+		return oracleFile;
+	}
+	@Override
+	public OracleFile getOaProFileById(String id) {
+		MapBean map = new MapBean();
+		map.put("file_id", id);
+		return getOaProFile(map);
+	}
+	@Override
+	public void downloadOracleFileToResp(OracleFile oracleFile,HttpServletResponse resp){
+	    OutputStream os = null;
+		try {
+			os = resp.getOutputStream();
+			downloadOracleFileToOs(oracleFile,os);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			MyFileUtils.free(os);
+		}
+	}
+
+	@Override
+	public void downloadOracleFileToOs(OracleFile oracleFile, OutputStream os) {
+
+		BufferedInputStream bis = null;
+		try {
+			bis = new BufferedInputStream(oracleFile.getIs());
+		    MyFileUtils.writeIsToOs(bis,os);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			MyFileUtils.free(bis);
+		}
+		
+	}
 }
