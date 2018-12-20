@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author Administrator
  */
-public class MyTimeUtils {
+public class MyDateFormatUtils {
 
 	/** SimpleDateFormat是一个非线程安全的类，一般不定义为static,如果定义为static，必须加锁，或者使用DateUtils工具类。*/
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
