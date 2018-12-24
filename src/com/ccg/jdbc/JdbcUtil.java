@@ -1,6 +1,5 @@
 package com.ccg.jdbc;
 
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -64,15 +63,11 @@ public class JdbcUtil {
 	}
 	
 	public static void init() {
-		try {
-			props = MyPropertyUtils.getPropertiesFromFile("jdbc.properties");
-			driverClassName = props.getProperty("oracle.driverClassName");
-			url = props.getProperty("url");
-			username = props.getProperty("username");
-			password = props.getProperty("password");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		props = MyPropertyUtils.getPropertiesFromFile("jdbc.properties");
+		driverClassName = props.getProperty("oracle.driverClassName");
+		url = props.getProperty("url");
+		username = props.getProperty("username");
+		password = props.getProperty("password");
 	}
 	
 	/**

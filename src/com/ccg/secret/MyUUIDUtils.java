@@ -1,8 +1,8 @@
-package com.ccg.uuid;
+package com.ccg.secret;
 
 import java.util.UUID;
 
-public class UniqueUUIDUtils {
+public class MyUUIDUtils {
 	/**
 	 * 生成随机字符串:UUID 
 	 * 示例：35c18972c0a7417b96ccec603ebc669e

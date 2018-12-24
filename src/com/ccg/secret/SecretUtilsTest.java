@@ -1,4 +1,4 @@
-package com.ccg.uuid;
+package com.ccg.secret;
 
 import org.junit.Test;
 import com.ccg.time.MyTimeStampUtils;
@@ -8,12 +8,12 @@ import com.ccg.time.MyTimeStampUtils;
  * @author Administrator
  *
  */
-public class AllUniqueUtilsTest {
+public class SecretUtilsTest {
 	
 	@Test
 	public void testUniqueUUIDUtils(){
-		System.out.println(UniqueUUIDUtils.getUUID());
-		System.out.println(UniqueUUIDUtils.createUniqueId());
+		System.out.println(MyUUIDUtils.getUUID());
+		System.out.println(MyUUIDUtils.createUniqueId());
 		
 		//UUIDUtils.createUniqueId()：使用UUID+hashCode方式id，会出现重复的
 		int hashCodeVa = "23c4bcec-c781-40ca-8d41-a1c498052c36".hashCode(); 

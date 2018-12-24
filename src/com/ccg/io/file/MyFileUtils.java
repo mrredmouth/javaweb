@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,7 @@ import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -25,6 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+
+import jcifs.smb.SmbException;
+import jcifs.smb.SmbFile;
+import jcifs.smb.SmbFileInputStream;
 
 
 /**
@@ -334,4 +340,36 @@ public class MyFileUtils {
 			logger.error("关闭输出流错误！", e);
 		}
 	}
+	
+
+	/**
+	 * 获取SMB文件
+	 * @param filePath
+	 * @return
+	 * @throws MalformedURLException 
+	 * @throws UnknownHostException 
+	 * @throws SmbException 
+	 * @throws FileNotFoundException 
+	 */
+	public static InputStream getFileStreamByPath(String filePath) throws MalformedURLException, SmbException, UnknownHostException, FileNotFoundException {
+		if (filePath != null && filePath.trim().length() > 0) {
+			InputStream ins = null;
+			if(filePath.startsWith("smb")){
+				SmbFile smbFile = new SmbFile(filePath);
+				if (smbFile != null && smbFile.exists()) {
+					ins = new SmbFileInputStream(smbFile);
+				}
+				smbFile = null; //释放
+			} else {
+				File t_file = new File(filePath);
+				if (t_file != null && t_file.exists()) {
+					ins = new FileInputStream(t_file);
+				}
+				t_file = null; //释放
+			}
+			return ins;
+		}
+		return null;
+	}
+	
 }

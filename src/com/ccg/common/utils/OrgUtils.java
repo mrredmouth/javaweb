@@ -1,5 +1,8 @@
 package com.ccg.common.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,12 +79,22 @@ public class OrgUtils {
 	
 	
 	/**
-	 * 测试官方的静态方法
+	 * 测试官方的静态方法，
+	 * Arrays，URLEncoder，URLDecoder，
+	 * @throws UnsupportedEncodingException 
+	 * 
 	 */
 	@Test
-	public void testOrgStaticMethod(){
+	public void testOrgStaticMethod() throws UnsupportedEncodingException{
 		
 		//Arrays====================================================================
 		System.out.println(Arrays.asList(strToSplit.split(";")));//数组转集合
+		
+		//URLEncoder，URLDecoder，==============================================================
+		String orignalStr = "fatherid=2240&fatherdir=BT1261&fathername=2018年久其月报&global_flow_code=421";
+		String encoderStr = URLEncoder.encode(orignalStr,"UTF-8");
+		System.out.println("URLEncoder:  "+encoderStr);
+		String decoderStr = URLDecoder.decode(encoderStr,"UTF-8");
+		System.out.println("URLDecoder:  "+decoderStr);
 	}
 }
