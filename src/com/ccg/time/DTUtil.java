@@ -195,7 +195,6 @@ public class DTUtil {
 	
 	private static void init(){
 		calendar = Calendar.getInstance();
-//		calendar.setTime(new Date());
 	}
 	
 	/**

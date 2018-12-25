@@ -32,7 +32,7 @@ public class MyTaskRunner {
 			Timer timer = new Timer(true); 
 			
 			//time：第一次执行时间，每隔24*60*60*1000ms执行一次
-			//timer.schedule(new MyTask(), DateTimeUtil.getDate(14,30,0), 24*60*60*1000);
+			//timer.schedule(new MyTask(), MyTimeUtils.getDate(14,30,0), 24*60*60*1000);
 			
 			//5s后执行，每2s执行一次
 			timer.schedule(new MyTask(), 5000, 2000);

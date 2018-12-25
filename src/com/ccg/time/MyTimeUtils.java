@@ -61,5 +61,63 @@ public class MyTimeUtils {
         String[] result = reStr.split(",");
         return result;
     }
+    
+	/**
+	 * 根据开始时间startDate，进行年月日的加减
+	 * @param startdate 起始时间yyyy-mm-dd
+	 * @param y 年
+	 * @param m 月
+	 * @param d 日
+	 * @return yy-mm-dd
+	 * @throws ParseException 
+	 */
+	public static Date getDate(Date startDate, int y,int m,int d) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(startDate);
+		calendar.add(Calendar.YEAR, y);
+		calendar.add(Calendar.MONTH, m);
+		calendar.add(Calendar.DATE, d);
+		return calendar.getTime();
+	}
+	
+    /**
+	 * 根据时分秒，得到日期：默认当前时间为依据，进行时分秒加减
+	 * getDate(14,30,0) -> 2018-12-25 14:30:00
+	 * @param hour
+	 * @param minute
+	 * @param second
+	 * @return
+     * @throws ParseException 
+	 */
+	public static Date getDate(int hour,int minute,int second){
+		Date date = new Date();
+		return MyTimeUtils.getDate(date,hour,minute,second);
+	}
 
+	/**
+	 * 获取某月最后一天。
+	 * 逻辑：月+1，天-1。
+	 * @param startdatestring "-"分隔的年月字符串，如：2018-09
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String lastDayOfDate(String startdatestring) throws ParseException {
+		String[] date=startdatestring.split("-");
+		String year=date[0];
+		int month = Integer.parseInt(date[1])+1;
+		String datebase="";
+		if(month<10) {
+			datebase=year+"-0"+month+"-01";
+		} else {
+			datebase=year+"-"+month+"-01";
+		}
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		Date startdate=sdf.parse(datebase);
+		Calendar cal_start = Calendar.getInstance();
+		cal_start.setTime(startdate);
+	    cal_start.add(Calendar.DATE, -1);
+	    String dd=new SimpleDateFormat("yyyy-MM-dd").format(cal_start.getTime());
+		
+		return dd;
+	}
 }

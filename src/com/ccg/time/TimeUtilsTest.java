@@ -41,4 +41,9 @@ public class TimeUtilsTest {
 		//获取当前时间的毫秒：(11*60+35)*60*1000
 		System.out.println(DateUtils.getFragmentInMilliseconds(new Date(), Calendar.DATE));
 	}
+	
+	@Test
+	public void testGetDate(){
+		System.out.println(MyDateFormatUtils.getDateFormatStr(MyTimeUtils.getDate(14,30,0)));
+	}
 }
