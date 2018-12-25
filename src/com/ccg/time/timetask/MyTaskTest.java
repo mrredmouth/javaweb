@@ -8,6 +8,8 @@ package com.ccg.time.timetask;
 import java.io.IOException;
 import java.util.Timer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 /**
@@ -16,11 +18,13 @@ import org.junit.Test;
  */
 public class MyTaskTest {
 
+	Logger logger = LogManager.getLogger(MyTaskTest.class);
 	@Test
 	public void testMyTask() {
 		Timer timer = new Timer();
 		timer.schedule(new MyTask(), 1000, 2000);// 在1秒后执行此任务,每次间隔2秒,如果传递一个Data参数,就可以在某个固定的时间执行这个任务.
-		
+		logger.info("定时任务info");
+		logger.warn("定时任务warn");
 		// 用来停止此任务的,输入'q'则退出上面的定时任务
 		while(true){
 			try {
@@ -29,6 +33,7 @@ public class MyTaskTest {
 					//使用这个方法退出任务
 					timer.cancel();
 					System.out.println("quit success!");
+					logger.error("停止定时任务");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

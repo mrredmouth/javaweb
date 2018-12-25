@@ -27,7 +27,9 @@ public class MyPropertyUtils {
 			//is = MyPropertyUtils.class.getClassLoader().getResourceAsStream(fileName);
 			//方式三、
 			is = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-			props.load(is);
+			if(is != null){
+				props.load(is);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{

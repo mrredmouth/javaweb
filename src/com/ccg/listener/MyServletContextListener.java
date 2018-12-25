@@ -23,7 +23,7 @@ public class MyServletContextListener implements ServletContextListener{
 		
 		String issueFlag = "";
 		try {
-			issueFlag = MyPropertyUtils.getPropertyValue("sftp.properties","zjcw.screenDisplay.issueFlag","false");
+			issueFlag = MyPropertyUtils.getPropertyValue("timertask.properties","mytask.issueFlag","false");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
