@@ -1,18 +1,42 @@
+/** 
+* TimerTest.java Created on Mar 29, 2010
+* Copyright 2010@JSHX. 
+* All right reserved. 
+*/
 package com.ccg.time.timetask;
 
 import java.io.IOException;
 import java.util.Timer;
 
+import org.junit.Test;
+
 /**
- * 本类给出了使用Timer和TimerTaske的主要方法,其中包括定制任务,添加任务退出任务,退出定时器.
- * 因为TimerTask的status域是包级可访问的,所以没有办法在java.util.包外得到其状态,这对编程造成一些不便.
- * 我们不能判断某个Task的状态了
- * 
- * @Time 4:36:30 PM
- * @author mengxiankong
+ * Timer类是用来执行任务的类，它接受一个TimerTask做参数 Timer有两种执行任务的模式,最常用的是schedule,
+ * 它可以以两种方式执行任务:1:在某个时间(Data)，2:在某个固定的时间之后(int delay). 这两种方式都可以指定任务执行的频率
  */
-public class TimerTest2 {
-	public static void main(String[] args) {
+public class MyTaskTest {
+
+	@Test
+	public void testMyTask() {
+		Timer timer = new Timer();
+		timer.schedule(new MyTask(), 1000, 2000);// 在1秒后执行此任务,每次间隔2秒,如果传递一个Data参数,就可以在某个固定的时间执行这个任务.
+		
+		// 用来停止此任务的,输入'q'则退出上面的定时任务
+		while(true){
+			try {
+				int ch = System.in.read();
+				if(ch-'q'==0){
+					//使用这个方法退出任务
+					timer.cancel();
+					System.out.println("quit success!");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void testMyTask2() {
 		Timer timer = new Timer();
 		MyTask myTask1 = new MyTask();
 		MyTask myTask2 = new MyTask();

@@ -18,8 +18,7 @@ public class MyTask extends TimerTask{
 	
 	@Override
 	public void run() {
-//		System.out.println("________");
-		System.out.println(info);
+		System.out.println("MyTask.info: " + info);
 	}
 
 	/**

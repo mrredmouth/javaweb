@@ -11,7 +11,7 @@ import java.util.Date;
 public class MyDateFormatUtils {
 
 	/** SimpleDateFormat是一个非线程安全的类，一般不定义为static,如果定义为static，必须加锁，或者使用DateUtils工具类。*/
-	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
 	 * 将日期格式化成字符串，
@@ -37,6 +37,7 @@ public class MyDateFormatUtils {
     }   
     
     /**
+     * 使用默认格式化："yyyy-MM-dd HH:mm:ss"
      * SimpleDateFormat是一个非线程安全的类，一般不定义为static,如果定义为static，必须加锁，或者使用DateUtils工具类。
      * @param date
      * @return

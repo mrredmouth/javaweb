@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import com.ccg.base.dao.BaseService;
 import com.ccg.jdbc.JdbcUtil;
 
+/**
+ * 用于给service层的类继承，直接继承此实现类
+ * @author Administrator
+ *
+ */
 public class BaseServiceImpl implements BaseService{
 
 	/**

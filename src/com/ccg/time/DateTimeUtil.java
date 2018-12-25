@@ -15,6 +15,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 /**
  * 时间格式工具类
@@ -465,6 +466,27 @@ public class DateTimeUtil {
 			returnResults=sdf.format(cal.getTime());
 		}
 		return returnResults;
-}
-
+	}
+	
+	/**
+	 * 根据时分秒，得到日期：
+	 * getDate(14,30,0) -> 2018-12-25 14:30:00
+	 * @param hour
+	 * @param minute
+	 * @param second
+	 * @return
+	 */
+	public static Date getDate(int hour,int minute,int second){
+		Calendar calendar = Calendar.getInstance();    
+		calendar.set(Calendar.HOUR_OF_DAY, hour);    
+		calendar.set(Calendar.MINUTE, minute);    
+		calendar.set(Calendar.SECOND, second);
+		Date time = calendar.getTime();    
+		return time;
+	}
+	
+	@Test
+	public void testGetDate(){
+		System.out.println(MyDateFormatUtils.getDateFormatStr(getDate(14,30,0)));
+	}
 }
