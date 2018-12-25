@@ -1,6 +1,10 @@
 package com.ccg.common.utils;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -420,4 +424,87 @@ public class MyStringUtils {
 		return result;
  
 	}
+	
+    /**
+     *  判断是字符串是否为数字
+     * @return boolean true 数字； false 字符串
+     */
+    public static boolean isNumb(String str) {
+        boolean isTrue = true;
+        try {
+            Double.parseDouble(str);
+        } catch (Exception e) {
+            isTrue = false;
+        }
+        return isTrue;
+    }
+    
+    /**
+     * TODO: 判断传入的字符是否为数字，下划线或者A-Z字母
+     * @return boolean
+     */
+    public static boolean isNumOrStrOrBlan(char c) {
+
+        if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || c == 91 || c == 93 || c == 95 || (c >= 97 && c <= 122)) {
+            return true;
+        }
+        return false;
+    }
+    
+
+    /**
+     * 将字符串类型的clob字段，转为string
+     * @param clob
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
+    public static String changeClobToString(Clob clob) throws IOException, SQLException {
+        BufferedInputStream bi = new BufferedInputStream(clob.getAsciiStream());
+        int len = (int) clob.length();
+        byte[] by = new byte[len];
+        int i;
+        while (-1 != (i = bi.read(by, 0, by.length))) {
+            bi.read(by, 0, i);
+        }
+        String clobValue = new String(by);
+        bi.close();
+        return clobValue;
+    }
+
+    /**
+     * 将字符串类型的clob字段，转为string
+     * @param clob
+     * @return
+     */
+    public static String changeClobToStringGBK(Clob clob) throws UnsupportedEncodingException, IOException, SQLException {
+    	return new String(changeClobToString(clob).getBytes("GBK"));
+    }
+    /**
+     * 判断是否为数字
+     * @param info
+     * @return
+     */
+    public static boolean isNumber(String info) {
+
+        Pattern numPattern = Pattern.compile("^[0-9]+(.[0-9]*)?$");
+        if (StringUtils.isNotBlank(info) && numPattern.matcher(info).matches()) {
+            return true;
+        }
+        return false;
+    }
+	/**
+	 * 判断是否为整数
+	 * @param info
+	 * @return
+	 */
+    public static boolean isInteger(String info) {
+
+        Pattern intPattern = Pattern.compile("^-?[1-9]\\d*$");
+        if (StringUtils.isNotBlank(info) && intPattern.matcher(info).matches()) {
+            return true;
+        }
+        return false;
+    }
+    
 }

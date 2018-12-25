@@ -30,7 +30,7 @@ public class FileDownloadServlet extends HttpServlet{
 		String realPath = req.getServletContext().getRealPath("/WEB-INF/download/"+fileName);
 		
 		MyFileUtils.setDownloadHead(req, resp, realPath);
-		MyFileUtils.writeFileToResponse(realPath, resp.getOutputStream(),true);
+		MyFileUtils.writeFileToResponse(realPath, resp);
 		
 	}
 }

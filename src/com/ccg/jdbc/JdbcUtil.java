@@ -3,17 +3,18 @@ package com.ccg.jdbc;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 import org.apache.commons.lang3.StringUtils;
-
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.ccg.base.MapBean;
 import com.ccg.io.properties.MyPropertyUtils;
 
 public class JdbcUtil {
@@ -166,6 +167,11 @@ public class JdbcUtil {
 		}
 	}
 
+	/**
+	 * 调用存储过程
+	 * @param procedure_name	存储过程名
+	 * @param args 存储过程的参数
+	 */
 	public static void callProcedure(String procedure_name,Object ... args) {
 		Connection conn = null;
 		try {
@@ -177,4 +183,99 @@ public class JdbcUtil {
 			free(conn);
 		}
 	}
+	
+	/**
+	 * 查询并封装结果为MapBean
+	 * @param sql SQL语句
+	 * @param obj 一个或多个查询参数
+	 * @return List<MapBean> 返回一条或多条数据
+	 */
+	public static List<MapBean> queryRsMapBean(String sql, Object... obj) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MapBean> retMapList = new ArrayList<MapBean>();
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			for (int i = 0; i < obj.length; i++) {
+				pstmt.setObject(i + 1, obj[i]);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				MapBean rowMap = new MapBean();
+				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+					rowMap.put(rs.getMetaData().getColumnName(i), rs.getObject(i));
+				}
+				retMapList.add(rowMap);
+			}
+		} catch (SQLException err) {
+			err.printStackTrace();
+		}finally{
+			free(rs, pstmt, conn);
+		}
+		return retMapList;
+	}
+
+	/**
+	 * 查询并封装结果为MapBean
+	 * @param conn 自己传入conn
+	 * @param sql SQL语句
+	 * @param obj 查询参数
+	 * @return ResultSet
+	 */
+	public static List<MapBean> queryRsMapBeanByConn(Connection conn, String sql, Object... obj) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MapBean> retMapList = new ArrayList<MapBean>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for (int i = 0; i < obj.length; i++) {
+				pstmt.setObject(i + 1, obj[i]);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				MapBean rowMap = new MapBean();
+				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+					rowMap.put(rs.getMetaData().getColumnName(i), rs.getObject(i));
+				}
+				retMapList.add(rowMap);
+			}
+		} catch (SQLException err) {
+			err.printStackTrace();
+		} finally{
+			free(rs, pstmt, null);
+		}
+		return retMapList;
+	}
+	
+
+	/**
+	 * 保存和更新
+	 * @param dbModule DBModule枚举
+	 * @param sql SQL语句
+	 * @param obj 查询参数
+	 * @return int
+	 */
+	public static int update(String sql, Object... obj) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			for (int i = 0; i < obj.length; i++) {
+				pstmt.setObject(i + 1, obj[i]);
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException err) {
+			err.printStackTrace();
+			free(null, pstmt, conn);
+		} finally {
+			free(null, pstmt, conn);
+		}
+		return result;
+
+	}
+	
 }

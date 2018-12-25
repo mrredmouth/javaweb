@@ -1,6 +1,7 @@
 package com.ccg.time;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,4 +36,30 @@ public class MyTimeUtils {
 		Date lastDate = calendar.getTime(); 
 		return MyDateFormatUtils.getDateFormatStr("yyyyMM", lastDate);
 	}
+
+    /**
+     * 获取两个日期范围内所有的月份
+     * 
+     * @param startDate
+     *            开始日期
+     * @param endDate
+     *            结束日期
+     * @param parse
+     *            日期格式
+     */
+    public static String[] getBetweenTwoDate(Date startDate, Date endDate, String parse) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat(parse);
+        Calendar dd = Calendar.getInstance();// 定义日期实例
+        dd.setTime(startDate);// 设置日期起始时间
+        String reStr = "";
+        while (dd.getTime().before(endDate) || dd.getTime().equals(endDate)) {// 判断是否到结束日期
+            String str = sdf.format(dd.getTime());
+            reStr = reStr + str + ",";
+            dd.add(Calendar.MONTH, 1);// 进行当前日期月份加1
+        }
+        String[] result = reStr.split(",");
+        return result;
+    }
+
 }

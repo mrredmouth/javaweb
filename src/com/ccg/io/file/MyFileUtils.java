@@ -1,6 +1,7 @@
 package com.ccg.io.file;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,9 +20,10 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,16 +43,16 @@ public class MyFileUtils {
 	private static Logger logger = Logger.getLogger(MyFileUtils.class);
 	
 	/**
+	 * 可能在线打开，可能下载。
 	 * 设置下载文件的请求头，响应头;
-	 * 同时给浏览器下载的文件名编码兼容
-	 * 可设置文件类型已测：图片、word、excel
 	 * @param req
 	 * @param resp
 	 * @param filePath 文件全路径
+	 * @param isOnLine 是否在线打开 true:在线打开；false:不在线
 	 * @throws IOException
 	 */
-	public static void setDownloadHead(HttpServletRequest req, HttpServletResponse resp,String filePath) throws IOException{
-
+	public static void setDownloadHead(HttpServletRequest req, HttpServletResponse resp,String filePath,boolean isOnLine) throws IOException{
+		
 		String fileName = FilenameUtils.getName(filePath);
 		resp.reset(); // 非常重要
 		//设置文件保存名称。区分IE浏览器，中文乱码解决
@@ -63,9 +65,28 @@ public class MyFileUtils {
 		
 		//设置内容类型。IE会直接打开，设置让浏览器不直接打开，而是弹出下载框，保存文件
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
-    	resp.setContentType(getMineType(fileType) + "; charset=GBK");
-    	//设置响应头，文件名称
-    	resp.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		
+		if(isOnLine){
+            URL u = new URL(filePath);
+            resp.setContentType(u.openConnection().getContentType());
+            resp.setHeader("Content-Disposition", "inline; filename=" + fileName);
+		}else{
+			resp.setContentType(getMineType(fileType) + "; charset=GBK");
+			resp.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		}
+	}
+	/**
+	 * 设置下载文件的请求头，响应头;
+	 * 同时给浏览器下载的文件名编码兼容
+	 * 可设置文件类型已测：图片、word、excel
+	 * @param req
+	 * @param resp
+	 * @param filePath 文件全路径
+	 * @throws IOException
+	 */
+	public static void setDownloadHead(HttpServletRequest req, HttpServletResponse resp,String filePath) throws IOException{
+		//默认不在线打开文件，直接浏览器下载
+		MyFileUtils.setDownloadHead(req,resp,filePath,false);
 	}
 	
 	/**
@@ -283,6 +304,20 @@ public class MyFileUtils {
 		InputStream is = new FileInputStream(new File(filePath));
 		MyFileUtils.writeIsToOs(is,os);
 	}
+
+	/**
+	 * 从路径下载文件
+	 * @param realPath 服务器文件所在的路径
+	 * @param outputStream 输出流，将文件输出到浏览器的输出流，实现下载:ServletOutputStream
+	 * @throws IOException
+	 */
+	public static void writeFileToOs2(String realPath, OutputStream os) throws IOException{
+		
+		//文件拷贝，从拷贝到输出流。resp的getWriter字节流和getOutputStream字符流区别，
+		//文件下载是二进制，必须字符流resp.getResponse()
+		Files.copy(Paths.get(realPath), os);
+	}
+	
 	/**
 	 * 将文件写到response中，即浏览器下载文件
 	 * @param filePath
@@ -294,23 +329,6 @@ public class MyFileUtils {
 		MyFileUtils.writeFileToOs(filePath,outputStream);
         response.flushBuffer();
         outputStream.close();
-	}
-
-	/**
-	 * 从路径下载文件
-	 * @param realPath 服务器文件所在的路径
-	 * @param outputStream 输出流，将文件输出到浏览器的输出流，实现下载
-	 * @param closeStream 是否关闭输出流
-	 * @throws IOException
-	 */
-	public static void writeFileToResponse(String realPath, ServletOutputStream outputStream, boolean closeStream) throws IOException{
-		
-		//文件拷贝，从拷贝到输出流。resp的getWriter字节流和getOutputStream字符流区别，
-		//文件下载是二进制，必须字符流
-		Files.copy(Paths.get(realPath), outputStream);
-		if(closeStream){
-			outputStream.close();
-		}
 	}
 	
 	/**
@@ -372,4 +390,74 @@ public class MyFileUtils {
 		return null;
 	}
 	
+
+    /**
+     * Description: 将指定目录下的文件压缩成zip包
+     * @param sourceFilePath 资源文件夹路径
+     * @param zipFilePath 打包后的zip文件路径
+     * @param fileName zip包文件名称
+     * @return boolean
+     */
+    public static boolean fileToZip(String sourceFilePath, String zipFilePath, String fileName) {
+
+        boolean flag = false;
+        File sourceFile = new File(sourceFilePath);
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        FileOutputStream fos = null;
+        ZipOutputStream zos = null;
+
+        if (!sourceFile.exists()) {
+            System.out.println("待压缩的文件目录：" + sourceFilePath + "不存在.");
+        } else {
+            try {
+                File zipFile = new File(zipFilePath + "/" + fileName + ".zip");
+                if (zipFile.exists()) {
+                    System.out.println(zipFilePath + "目录下存在名字为:" + fileName + ".zip" + "打包文件.");
+                } else {
+                    File[] sourceFiles = sourceFile.listFiles();
+                    if (null == sourceFiles || sourceFiles.length < 1) {
+                        System.out.println("待压缩的文件目录：" + sourceFilePath + "里面不存在文件，无需压缩.");
+                    } else {
+                        fos = new FileOutputStream(zipFile);
+                        zos = new ZipOutputStream(new BufferedOutputStream(fos));
+                        byte[] bufs = new byte[1024 * 10];
+                        for (int i = 0; i < sourceFiles.length; i++) {
+                            // 创建ZIP实体，并添加进压缩包
+                            ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());
+                            zos.putNextEntry(zipEntry);
+                            // 读取待压缩的文件并写进压缩包里
+                            fis = new FileInputStream(sourceFiles[i]);
+                            bis = new BufferedInputStream(fis, 1024 * 10);
+                            int read = 0;
+                            while ((read = bis.read(bufs, 0, 1024 * 10)) != -1) {
+                                zos.write(bufs, 0, read);
+                            }
+                        }
+                        flag = true;
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            } finally {
+                // 关闭流
+                try {
+                    fos.flush();
+                    zos.flush();
+                    zos.close();
+                    fos.close();
+                    fis.close();
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return flag;
+    }
 }
