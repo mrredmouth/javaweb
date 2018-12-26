@@ -1,10 +1,15 @@
 package com.ccg.thread;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import com.ccg.time.MyTimeStampUtils;
 
 public class MyThreadUtilsTest {
+
+	/** commons.logging日志控件：org.apache.commons.logging.Log */
+	private static final Log logger = LogFactory.getLog(MyThreadUtilsTest.class);
 	/**
 	 * 用多线程测试，获取synchronized同步16位时间戳
 	 */
@@ -14,7 +19,7 @@ public class MyThreadUtilsTest {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					System.out.println(MyTimeStampUtils.getSynchronizedTime());
+					logger.info(MyTimeStampUtils.getSynchronizedTime());
 				}
 			}).start();
 		}

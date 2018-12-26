@@ -7,11 +7,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import com.ccg.pojo.User;
@@ -21,6 +24,9 @@ import com.ccg.pojo.User;
  * @author Administrator
  */
 public class OrgUtils {
+
+	private static final Log logger = LogFactory.getLog(OrgUtils.class);
+	
 	private String filePath = "/czxtdemo3/WebRoot/WEB-INF/download/01_HTML-JS-新.xlsx";
 	private String strToSplit = "png;gif;jpg;jpeg";
 	private List<String> strList = Arrays.asList("list1","list2","list3");
@@ -96,5 +102,20 @@ public class OrgUtils {
 		System.out.println("URLEncoder:  "+encoderStr);
 		String decoderStr = URLDecoder.decode(encoderStr,"UTF-8");
 		System.out.println("URLDecoder:  "+decoderStr);
+	}
+	
+
+	/**
+	 * TimeUnit的静态属性
+	 */
+	@Test
+	public void testTimeUnit() {
+		logger.info(TimeUnit.DAYS); //天
+		logger.info(TimeUnit.HOURS);  //小时
+		logger.info(TimeUnit.MINUTES); //分钟
+		logger.info(TimeUnit.SECONDS);  //秒
+		logger.info(TimeUnit.MILLISECONDS); //毫秒
+		logger.info(TimeUnit.MICROSECONDS); //微妙
+		logger.info(TimeUnit.NANOSECONDS); //纳秒
 	}
 }

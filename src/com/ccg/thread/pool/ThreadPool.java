@@ -8,11 +8,9 @@ package com.ccg.thread.pool;
 import java.util.LinkedList;
 
 /**
+ * LinkedList线程池
  * 线程池用一个双向链表来表示，池中的元素是处于休眠状态的工作线程。ThreadPool类大部分工作都是来维护这个双向链表，
  * 当有新的请求到达时，先从表头摘取一个工作线程，将其唤醒转入工作状态。如果线程池为空，则创建一个新的工作线程
- * 
- * @Time 7:49:20 PM
- * @author mengxiankong
  */
 public class ThreadPool {
 	static final long IDLE_TIMEOUT = 60000L;
