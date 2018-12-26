@@ -19,8 +19,9 @@
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
 		</Console>
 		
-		<!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
-		<File name="log" fileName="log/test.log" append="false">
+		<!--日志记录到文件,append=true:追加方式记录日志，不会清空;
+						  append=false:每次运行程序时，会自动清空，适合临时测试用-->
+		<File name="log" fileName="log/test.log" append="true">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
 		</File>
 

@@ -34,8 +34,8 @@ public class MyTaskRunner {
 			//time：第一次执行时间，每隔24*60*60*1000ms执行一次
 			//timer.schedule(new MyTask(), MyTimeUtils.getDate(14,30,0), 24*60*60*1000);
 			
-			//5s后执行，每2s执行一次
-			timer.schedule(new MyTask(), 5000, 2000);
+			//10s后执行，每5s执行一次
+			timer.schedule(new MyTask(), 10000, 5000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.debug("定时任务列表加载出错信息："+e.getMessage());
