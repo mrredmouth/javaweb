@@ -1,6 +1,7 @@
 package com.ccg.secret;
 
 import org.junit.Test;
+
 import com.ccg.time.MyTimeStampUtils;
 
 /**
@@ -20,15 +21,6 @@ public class SecretUtilsTest {
 		int hashCodeVb = "3b0b731b-bad2-4bfd-b305-444fc482fa21".hashCode();
 		System.out.println(hashCodeVa == hashCodeVb);
 		
-	}
-	@Test
-	public void testUniqueTimestampUtils(){
-		System.out.println(MyTimeStampUtils.uniqueCurrentTimeMS());
-		System.out.println(MyTimeStampUtils.uniqueCurrentTimeMS());
-		
-		System.out.println(MyTimeStampUtils.uniqueNanoTime());
-		System.out.println(MyTimeStampUtils.uniqueNanoTime());
-		System.out.println(MyTimeStampUtils.uniqueNanoTime());
 	}
 	
 	/**

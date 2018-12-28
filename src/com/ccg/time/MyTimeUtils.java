@@ -13,7 +13,6 @@ public class MyTimeUtils {
 	 * 获取上月;
 	 * date 传入时间类型，返回时间类型
 	 */
-	@Test
 	public static Date getLastMonth(Date date){
 		Calendar calendar = Calendar.getInstance(); 
 		calendar.setTime(date); // 设置为当前时间 
@@ -27,7 +26,6 @@ public class MyTimeUtils {
 	 * dateStr 必须与parse的类型一致，也是yyyyMM
 	 * @throws ParseException 
 	 */
-	@Test
 	public static String getLastMonth(String dateStr) throws ParseException{
 		Date date = MyDateFormatUtils.getDateFormatStr("yyyyMM", dateStr);
 		Calendar calendar = Calendar.getInstance(); 
@@ -119,5 +117,23 @@ public class MyTimeUtils {
 	    String dd=new SimpleDateFormat("yyyy-MM-dd").format(cal_start.getTime());
 		
 		return dd;
+	}
+	
+	
+	/**
+	 * 获取今天时间,和上月的今天;
+	 */
+	@Test
+	public void getLastMonthTime(){
+		System.out.println(MyTimeUtils.getLastMonth(new Date()));
+	}
+	/**
+	 * 获取上月;
+	 * @throws ParseException 
+	 */
+	@Test
+	public void getLastMonth() throws ParseException{
+		System.out.println(MyTimeUtils.getLastMonth("201809"));
+		System.out.println(MyTimeUtils.getLastMonth("201801"));
 	}
 }

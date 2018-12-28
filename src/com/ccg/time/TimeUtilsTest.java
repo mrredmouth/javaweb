@@ -1,6 +1,5 @@
 package com.ccg.time;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,22 +8,6 @@ import org.junit.Test;
 
 public class TimeUtilsTest {
 
-	/**
-	 * 获取今天时间,和上月的今天;
-	 */
-	@Test
-	public void getLastMonthTime(){
-		System.out.println(MyTimeUtils.getLastMonth(new Date()));
-	}
-	/**
-	 * 获取上月;
-	 * @throws ParseException 
-	 */
-	@Test
-	public void getLastMonth() throws ParseException{
-		System.out.println(MyTimeUtils.getLastMonth("201809"));
-		System.out.println(MyTimeUtils.getLastMonth("201801"));
-	}
 	
 	/**
 	 * DateUtils
@@ -42,8 +25,4 @@ public class TimeUtilsTest {
 		System.out.println(DateUtils.getFragmentInMilliseconds(new Date(), Calendar.DATE));
 	}
 	
-	@Test
-	public void testGetDate(){
-		System.out.println(MyDateFormatUtils.getDateFormatStr(MyTimeUtils.getDate(14,30,0)));
-	}
 }

@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.Test;
+
 /**
  * 
  * @author Administrator
@@ -49,4 +51,10 @@ public class MyDateFormatUtils {
     	}
     	return result;
     }   
+    
+
+	@Test
+	public void testGetDate(){
+		System.out.println(MyDateFormatUtils.getDateFormatStr(MyTimeUtils.getDate(14,30,0)));
+	}
 }
