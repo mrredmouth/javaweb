@@ -35,7 +35,7 @@ public class MyLog4j2Test {
 			@SuppressWarnings("unused")
 			int a = 1/0;
 		}catch (Exception e) {
-			logger2.debug("定时任务列表加载出错信息",e);
+			logger2.error("定时任务列表加载出错信息",e);
 		}
 	}
 }
