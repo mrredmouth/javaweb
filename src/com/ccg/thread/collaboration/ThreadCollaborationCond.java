@@ -10,8 +10,6 @@ import java.util.concurrent.locks.ReentrantLock;
  *  cond.await()			对应object.wait()		阻塞当前线程，加锁
  *  cond.signal()			对应object.notify()		唤醒一个阻塞的线程，解锁
  *  cond.signalAll()		对应object.notifyAll()	唤醒所有阻塞的线程，解锁
- * @author Administrator
- *
  */
 public class ThreadCollaborationCond {
 
