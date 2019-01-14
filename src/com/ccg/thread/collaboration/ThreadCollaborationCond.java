@@ -5,13 +5,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 线程间协作的两种方式：
- * 	1、利用Object对象的wait、notify、notifyAll：
- *  2、使用Condition:
- *  调用Condition的await()和signal()方法，都必须在lock保护之内，就是说必须在lock.lock()和lock.unlock之间才可以使用
- *  Conditon中的await()			对应Object的wait()；
-　　Condition中的signal()		对应Object的notify()；
-　　Condition中的signalAll()		对应Object的notifyAll()。
+ * 线程间协作方式二：（使用Condition）
+ *  调用Condition的await()和signal()方法，都必须在lock保护之内，即必须在lock.lock()和lock.unlock之间才可以使用
+ *  cond.await()			对应object.wait()		阻塞当前线程，加锁
+ *  cond.signal()			对应object.notify()		唤醒一个阻塞的线程，解锁
+ *  cond.signalAll()		对应object.notifyAll()	唤醒所有阻塞的线程，解锁
  * @author Administrator
  *
  */
@@ -24,9 +22,9 @@ public class ThreadCollaborationCond {
         @Override
         public void run() {
             try {
-            	//对应obj的wait()
                 lock.lock();
-            	cond.await();;
+                //对应obj的wait()
+            	cond.await();
             } catch (InterruptedException e) {
             	e.printStackTrace();
             } finally{
@@ -60,6 +58,10 @@ public class ThreadCollaborationCond {
         Thread1 thread1 = test.new Thread1();
         Thread2 thread2 = test.new Thread2();
          
+        /**
+         * thread1线程启动之后,cond.await()使得线程阻塞。
+         * 等待thread2线程的cond.signal()释放锁后，thread1才被唤醒。
+         */
         thread1.start();
         try {
             Thread.sleep(200);

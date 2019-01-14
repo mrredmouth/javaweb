@@ -5,6 +5,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 非堵塞队列 ，使用condition实现生产者-消费者模式：
+ * cond.await()、cond.signal()、非阻塞队列PriorityQueue<Integer>
+ */
 public class NonBlockingQueueCond {
 	private int queueSize = 10;
     private PriorityQueue<Integer> queue = new PriorityQueue<Integer>(queueSize);

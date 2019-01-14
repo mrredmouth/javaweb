@@ -1,14 +1,11 @@
 package com.ccg.thread.collaboration;
 
 /**
- * 线程间协作的两种方式：
- * 	1、利用Object对象的wait、notify、notifyAll：
- * 		调用某个对象的wait()方法能让当前线程阻塞，并且当前线程必须拥有此对象的monitor（即锁）
- * 		调用某个对象的notify()方法能够唤醒一个正在等待这个对象的monitor的线程，如果有多个线程都在等待
- * 			这个对象的monitor，则只能唤醒其中一个线程；
- * 		调用notifyAll()方法能够唤醒所有正在等待这个对象的monitor的线程；
- * 	2、使用Condition
- * @author Administrator
+ * 线程间协作的方式一：（使用object）
+ * 利用Object对象的wait、notify、notifyAll：
+ * object.wait():		阻塞当前线程，当前线程拥有此对象的monitor。加锁。（monitor只能被一个线程拥有）
+ * object.notify():		释放monitor，唤醒一个正在等待monitor的线程，若多个线程等待，则只能唤醒其中一个。解锁。
+ * object.notifyAll()：	释放monitor，唤醒所有正在等待monitor的线程。解锁。
  */
 public class ThreadCollaborationObj {
     public static Object object = new Object();
@@ -18,7 +15,7 @@ public class ThreadCollaborationObj {
         public void run() {
             synchronized (object) {
                 try {
-                	//当前线程堵塞,等待对象的monitor；当对象object的monitor被解锁了，才被唤醒。
+                	//当前线程堵塞,等待对象的monitor；等待对象object的monitor被解锁了，才被唤醒。
                     object.wait();
                 } catch (InterruptedException e) {
                 }

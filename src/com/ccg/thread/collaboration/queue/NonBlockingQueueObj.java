@@ -3,11 +3,8 @@ package com.ccg.thread.collaboration.queue;
 import java.util.PriorityQueue;
 
 /**
- * 非堵塞队列，实现生产者-消费者模式：
- * PriorityQueue
- * 使用Object.wait()和Object.notify()、非阻塞队列实现生产者-消费者模式：
- * @author Administrator
- *
+ * 非堵塞队列，使用object实现生产者-消费者模式：
+ * Object.wait()、Object.notify()、非阻塞队列PriorityQueue<Integer>
  */
 public class NonBlockingQueueObj {
     private int queueSize = 10;
