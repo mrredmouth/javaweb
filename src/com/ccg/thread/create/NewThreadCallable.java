@@ -14,7 +14,7 @@ import org.junit.Test;
  * 结合Future或FutureTask一起使用，可获取执行结果；
  * @author Administrator
  */
-public class MyThread3 implements Callable<Integer> {
+public class NewThreadCallable implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         System.out.println("子线程在进行计算");
@@ -32,7 +32,7 @@ public class MyThread3 implements Callable<Integer> {
     @Test
 	public void testCallableFuture() {
         ExecutorService executor = Executors.newCachedThreadPool();
-        MyThread3 task = new MyThread3();
+        NewThreadCallable task = new NewThreadCallable();
         Future<Integer> result = executor.submit(task);
         executor.shutdown();
          
@@ -62,7 +62,7 @@ public class MyThread3 implements Callable<Integer> {
 	public void testCallableFutureTask() {
         //第一种方式
         ExecutorService executor = Executors.newCachedThreadPool();
-        MyThread3 task = new MyThread3();
+        NewThreadCallable task = new NewThreadCallable();
         FutureTask<Integer> futureTask = new FutureTask<Integer>(task);
         executor.submit(futureTask);
         executor.shutdown();
