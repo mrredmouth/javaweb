@@ -1,4 +1,4 @@
-package com.ccg.thread.collaboration.queue;
+package com.ccg.thread.collaboration.blockingqueue;
 
 import java.util.PriorityQueue;
 

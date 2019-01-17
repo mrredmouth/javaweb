@@ -1,4 +1,4 @@
-package com.ccg.thread.collaboration;
+package com.ccg.thread.collaboration.threadcollaboration;
 
 /**
  * 线程间协作的方式一：（使用object）

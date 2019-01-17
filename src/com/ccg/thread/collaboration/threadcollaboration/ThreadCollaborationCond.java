@@ -1,4 +1,4 @@
-package com.ccg.thread.collaboration;
+package com.ccg.thread.collaboration.threadcollaboration;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -65,6 +65,8 @@ public class ThreadCollaborationCond {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            //InterruptedException线程中断的异常catch之后，需要手动停止线程
+            Thread.currentThread().interrupt();
         }
         thread2.start();
     }
